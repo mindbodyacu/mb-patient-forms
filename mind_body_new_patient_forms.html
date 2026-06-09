@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mind + Body Acupuncture — New Patient Forms</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+:root {
+  --purple: #534AB7;
+  --purple-mid: #7F77DD;
+  --purple-light: #EEEDFE;
+  --purple-border: #AFA9EC;
+  --purple-dark: #3C3489;
+  --gray-bg: #F5F4F2;
+  --gray-border: #E2E0DC;
+  --gray-text: #6B6968;
+  --text: #1C1B1A;
+  --white: #ffffff;
+  --red: #C0392B;
+  --green: #1A7F52;
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--gray-bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 24px 16px 48px;
+}
+.form-wrap { max-width: 720px; margin: 0 auto; }
+
+/* Header */
+.logo-header {
+  text-align: center;
+  padding: 24px 0 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--gray-border);
+}
+.logo-header h1 { font-size: 22px; font-weight: 600; color: var(--purple-dark); letter-spacing: -0.3px; }
+.logo-header p { font-size: 13px; color: var(--gray-text); margin-top: 4px; }
+
+/* Progress */
+.progress-wrap { margin-bottom: 20px; }
+.progress-bar { background: var(--gray-border); border-radius: 99px; height: 5px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 99px; background: var(--purple); transition: width 0.4s ease; }
+.progress-label { font-size: 12px; color: var(--gray-text); margin-top: 6px; text-align: right; }
+
+/* Tab nav */
+.tab-nav { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 6px 14px; font-size: 12px; border: 1px solid var(--gray-border);
+  border-radius: 99px; background: var(--white); color: var(--gray-text);
+  cursor: pointer; transition: all 0.15s; font-family: inherit; white-space: nowrap;
+}
+.tab-btn.active { background: var(--purple-light); color: var(--purple-dark); border-color: var(--purple-border); font-weight: 600; }
+.tab-btn.done { background: #EAF6EF; color: #0F6E56; border-color: #5DCAA5; }
+
+/* Pages */
+.page { display: none; }
+.page.active { display: block; }
+
+/* Section cards */
+.section {
+  background: var(--white); border: 1px solid var(--gray-border);
+  border-radius: var(--radius); padding: 20px 24px; margin-bottom: 16px;
+}
+.section-title {
+  font-size: 14px; font-weight: 600; color: var(--purple-dark);
+  margin-bottom: 16px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--gray-border);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+
+/* Fields */
+.field-row { display: grid; gap: 12px; margin-bottom: 12px; }
+.field-row.cols-2 { grid-template-columns: 1fr 1fr; }
+.field-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.field-row.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label {
+  font-size: 11px; font-weight: 600; color: var(--gray-text);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.field-note { font-size: 11px; color: #AAA8A5; margin-top: 2px; }
+
+input[type=text], input[type=date], input[type=email], input[type=tel], select, textarea {
+  width: 100%; padding: 9px 11px; font-size: 14px;
+  border: 1px solid var(--gray-border); border-radius: var(--radius-sm);
+  background: var(--white); color: var(--text); font-family: inherit;
+  transition: border-color 0.15s;
+  -webkit-appearance: none; appearance: none;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none; border-color: var(--purple-mid);
+  box-shadow: 0 0 0 3px rgba(127,119,221,0.12);
+}
+select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B6968' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px; }
+textarea { resize: vertical; min-height: 68px; }
+
+/* Optional badge */
+.opt {
+  font-size: 10px; font-weight: 500; background: #F5F4F2; color: var(--gray-text);
+  border: 1px solid var(--gray-border); border-radius: 99px;
+  padding: 1px 7px; margin-left: 6px; vertical-align: middle;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+
+/* Radio / checkbox */
+.radio-group { display: flex; gap: 20px; margin-top: 4px; flex-wrap: wrap; }
+.radio-group label, .check-label {
+  font-size: 14px; font-weight: 400; color: var(--text);
+  display: flex; align-items: center; gap: 7px; cursor: pointer;
+  text-transform: none; letter-spacing: 0;
+}
+.checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px; margin-top: 6px; }
+.check-label { padding: 4px 0; }
+input[type=radio], input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--purple); cursor: pointer; flex-shrink: 0; }
+
+/* Phone row */
+.phone-row { display: flex; gap: 6px; }
+.phone-prefix { flex-shrink: 0; width: 195px; }
+.phone-num { flex: 1; }
+
+/* Subsection */
+.subsection { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-border); }
+.subsection-title { font-size: 11px; font-weight: 600; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+
+/* Policy box */
+.policy-box {
+  background: var(--gray-bg); border: 1px solid var(--gray-border);
+  border-radius: var(--radius-sm); padding: 14px 16px;
+  font-size: 13px; line-height: 1.7; margin-bottom: 16px; color: var(--text);
+}
+.policy-box strong { font-weight: 600; }
+
+/* Initial field */
+.initial-row {
+  display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px;
+  padding: 12px 14px; background: var(--gray-bg);
+  border: 1px solid var(--gray-border); border-radius: var(--radius-sm);
+}
+.initial-input {
+  width: 64px !important; text-align: center; font-weight: 700;
+  font-size: 16px; text-transform: uppercase; flex-shrink: 0;
+  border-color: var(--purple-border) !important;
+}
+.initial-text { font-size: 13px; line-height: 1.6; padding-top: 2px; }
+
+/* Signature */
+.sig-wrap { position: relative; border: 1px solid var(--gray-border); border-radius: var(--radius-sm); background: var(--white); margin-top: 5px; }
+canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; border-radius: var(--radius-sm); }
+.sig-hint { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 12px; color: #CCC; pointer-events: none; text-align: center; }
+.sig-clear { font-size: 11px; color: var(--gray-text); background: none; border: none; cursor: pointer; padding: 4px 0; text-decoration: underline; font-family: inherit; }
+
+/* Legal rows */
+.yn-block {
+  padding: 12px 14px; border: 1px solid var(--gray-border);
+  border-radius: var(--radius-sm); background: var(--gray-bg); margin-bottom: 8px;
+}
+.yn-text { font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+.yn-row { display: flex; gap: 16px; }
+.yn-row label { font-size: 14px; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+
+/* Nav buttons */
+.nav-btns { display: flex; justify-content: space-between; margin-top: 20px; gap: 12px; }
+.btn-back {
+  padding: 10px 22px; font-size: 14px; border: 1px solid var(--gray-border);
+  border-radius: var(--radius-sm); background: var(--white); color: var(--gray-text);
+  cursor: pointer; font-family: inherit; transition: all 0.15s;
+}
+.btn-back:hover { background: var(--gray-bg); }
+.btn-next {
+  padding: 10px 26px; font-size: 14px; border: 1px solid var(--purple-border);
+  border-radius: var(--radius-sm); background: var(--purple-light); color: var(--purple-dark);
+  font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s;
+}
+.btn-next:hover { background: var(--purple-border); }
+.btn-submit {
+  padding: 11px 30px; font-size: 14px; border-radius: var(--radius-sm);
+  background: var(--purple); color: var(--white); border: none;
+  font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s;
+}
+.btn-submit:hover { background: var(--purple-dark); }
+
+/* Body map */
+.bmap-controls { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
+.vbtn {
+  padding: 5px 14px; font-size: 12px; border: 1px solid var(--gray-border);
+  border-radius: 99px; background: var(--white); color: var(--gray-text);
+  cursor: pointer; font-family: inherit; transition: all 0.15s;
+}
+.vbtn.active { background: var(--purple-light); color: var(--purple-dark); border-color: var(--purple-border); font-weight: 600; }
+.svg-panel { display: none; flex-direction: column; align-items: center; width: 100%; }
+.svg-panel.active { display: flex; }
+.view-label { font-size: 10px; color: var(--gray-text); text-align: center; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.08em; }
+.map-instruction { font-size: 13px; color: var(--gray-text); text-align: center; margin-bottom: 10px; }
+
+/* Body map SVG styles */
+.region { cursor: pointer; }
+.region .hl { fill: var(--purple); opacity: 0; transition: opacity 0.18s; }
+.region:hover .hl { opacity: 0.3; }
+.region.sel .hl { opacity: 0.5; }
+.bl { fill: none; stroke: #B4B2A9; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
+.bf { fill: #F1EFE8; stroke: #B4B2A9; stroke-width: 1; }
+.lbl { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 10px; fill: #888780; text-anchor: middle; pointer-events: none; }
+
+/* Tags */
+.tags-wrap { margin-top: 12px; background: var(--gray-bg); border: 1px solid var(--gray-border); border-radius: var(--radius-sm); padding: 12px 14px; }
+.tags-title { font-size: 11px; font-weight: 600; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; min-height: 26px; }
+.tag { display: flex; align-items: center; gap: 5px; background: var(--purple-light); color: var(--purple-dark); border-radius: 99px; padding: 3px 10px; font-size: 12px; font-weight: 500; }
+.tag button { background: none; border: none; cursor: pointer; color: var(--purple-mid); font-size: 15px; line-height: 1; padding: 0; font-family: inherit; }
+.map-empty { font-size: 13px; color: #C0BDB9; }
+.map-legend { display: flex; gap: 16px; justify-content: center; margin-top: 10px; }
+.leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--gray-text); }
+.leg-sw { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+/* Success screen */
+.success { text-align: center; padding: 32px 16px; }
+.success-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--purple-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; color: var(--purple); }
+.success h2 { font-size: 22px; font-weight: 600; margin-bottom: 8px; color: var(--purple-dark); }
+.success p { font-size: 14px; color: var(--gray-text); line-height: 1.7; margin-bottom: 16px; }
+.summary-box {
+  background: var(--gray-bg); border: 1px solid var(--gray-border);
+  border-radius: var(--radius-sm); padding: 16px; text-align: left;
+  font-size: 12px; font-family: monospace; line-height: 1.7;
+  max-height: 300px; overflow-y: auto; margin: 16px 0; white-space: pre-wrap;
+  color: var(--text);
+}
+.btn-copy {
+  padding: 10px 24px; font-size: 14px; border: 1px solid var(--purple-border);
+  border-radius: var(--radius-sm); background: var(--purple-light); color: var(--purple-dark);
+  font-weight: 600; cursor: pointer; font-family: inherit; margin-right: 10px;
+}
+.btn-email {
+  padding: 10px 24px; font-size: 14px; border-radius: var(--radius-sm);
+  background: var(--purple); color: var(--white); border: none;
+  font-weight: 600; cursor: pointer; font-family: inherit; text-decoration: none;
+  display: inline-block;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .field-row.cols-2, .field-row.cols-3, .field-row.cols-4 { grid-template-columns: 1fr; }
+  .phone-prefix { width: 160px; }
+  .tab-btn { font-size: 11px; padding: 5px 10px; }
+  body { padding: 12px 10px 40px; }
+  .section { padding: 16px 14px; }
+}
+</style>
+</head>
+<body>
+<div class="form-wrap">
+
+  <div class="logo-header">
+    <h1>Mind + Body Acupuncture &amp; Wellness</h1>
+    <p>8700 Menchaca Rd Suite 203 &middot; Austin, TX 78748 &middot; (512) 541-9673 &middot; mindplusbodyacu.com</p>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:25%"></div></div>
+    <div class="progress-label" id="prog-label">Step 1 of 4</div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="goTo(0)" id="tab0">1 &middot; Health history</button>
+    <button class="tab-btn" onclick="goTo(1)" id="tab1">2 &middot; Symptoms</button>
+    <button class="tab-btn" onclick="goTo(2)" id="tab2">3 &middot; Legal &amp; privacy</button>
+    <button class="tab-btn" onclick="goTo(3)" id="tab3">4 &middot; Cancellation policy</button>
+  </div>
+
+  <!-- ==================== PAGE 1: HEALTH HISTORY ==================== -->
+  <div class="page active" id="page0">
+
+    <div class="section">
+      <div class="section-title">Personal information</div>
+
+      <div class="field-row cols-3">
+        <div class="field"><label>First name</label><input type="text" id="first_name" placeholder="First name"></div>
+        <div class="field"><label>Last name</label><input type="text" id="last_name" placeholder="Last name"></div>
+        <div class="field">
+          <label>Preferred name <span class="opt">optional</span></label>
+          <input type="text" id="preferred_name" placeholder="Name you go by, if different">
+          <span class="field-note">Leave blank if same as first name</span>
+        </div>
+      </div>
+
+      <div class="field-row cols-3">
+        <div class="field"><label>Date of birth</label><input type="date" id="dob"></div>
+        <div class="field"><label>Today's date</label><input type="date" id="today_date"></div>
+        <div class="field"><label>Preferred pronouns</label><input type="text" id="pronouns" placeholder="e.g. she/her, they/them"></div>
+      </div>
+
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Primary phone</label>
+          <div class="phone-row">
+            <div class="phone-prefix"><select id="primary_prefix" aria-label="Country dial code"></select></div>
+            <div class="phone-num"><input type="tel" id="primary_phone" placeholder="555-0100"></div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Secondary phone <span class="opt">optional</span></label>
+          <div class="phone-row">
+            <div class="phone-prefix"><select id="secondary_prefix" aria-label="Country dial code"></select></div>
+            <div class="phone-num"><input type="tel" id="secondary_phone" placeholder="555-0199"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-row"><div class="field"><label>Email address</label><input type="email" id="email" placeholder="you@example.com"></div></div>
+
+      <div class="field-row cols-3">
+        <div class="field" style="grid-column:span 2"><label>Street address</label><input type="text" id="address"></div>
+        <div class="field"><label>City</label><input type="text" id="city"></div>
+      </div>
+
+      <div class="field-row cols-3">
+        <div class="field"><label>Country</label><select id="country_select"></select></div>
+        <div class="field"><label>State / Province / Region <span class="opt">optional</span></label><select id="state_select"></select></div>
+        <div class="field"><label>Zip / Postal code</label><input type="text" id="zip" placeholder="78748"></div>
+      </div>
+
+      <div class="field-row cols-2">
+        <div class="field"><label>Place of birth</label><input type="text" id="pob"></div>
+        <div class="field"><label>Marital status</label>
+          <select id="marital"><option value="">Select…</option><option>Single</option><option>Married</option><option>Partnered</option><option>Divorced</option><option>Widowed</option></select>
+        </div>
+      </div>
+
+      <div class="field-row cols-4">
+        <div class="field"><label>Height</label><input type="text" id="height" placeholder="5'6&quot;"></div>
+        <div class="field"><label>Weight</label><input type="text" id="weight" placeholder="140 lbs"></div>
+        <div class="field"><label>Age</label><input type="text" id="age"></div>
+        <div class="field"><label>Occupation</label><input type="text" id="occupation"></div>
+      </div>
+
+      <div class="field-row cols-2">
+        <div class="field"><label>Primary care provider <span class="opt">optional</span></label><input type="text" id="pcp" placeholder="Provider name"></div>
+        <div class="field"><label>Referred by <span class="opt">optional</span></label><input type="text" id="referred_by" placeholder="Person or practice that referred you"></div>
+      </div>
+
+      <div class="field-row"><div class="field"><label>Emergency contact (name &amp; phone)</label><input type="text" id="emergency_contact" placeholder="Jane Smith — (512) 555-0199"></div></div>
+
+      <div class="field-row"><div class="field"><label>Have you had acupuncture before?</label>
+        <div class="radio-group">
+          <label class="check-label"><input type="radio" name="acu_before" value="yes"> Yes</label>
+          <label class="check-label"><input type="radio" name="acu_before" value="no"> No</label>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Main complaint</div>
+      <div class="field-row"><div class="field"><label>What brings you in?</label><textarea id="main_complaint" placeholder="Describe your main reason for seeking treatment…"></textarea></div></div>
+      <div class="field-row cols-2">
+        <div class="field"><label>How long ago did this begin?</label><input type="text" id="onset" placeholder="e.g. 3 months ago, 2 years"></div>
+        <div class="field"><label>Known cause?</label><input type="text" id="known_cause"></div>
+      </div>
+      <div class="field-row"><div class="field"><label>To what extent does this interfere with daily activities?</label><textarea id="interference" placeholder="Impact on work, sleep, activity…" style="min-height:52px"></textarea></div></div>
+      <div class="field-row"><div class="field"><label>Have you received a diagnosis? If so, what?</label><input type="text" id="diagnosis"></div></div>
+      <div class="field-row"><div class="field"><label>What treatments have you tried?</label><textarea id="treatments_tried" style="min-height:52px" placeholder="Medications, physical therapy, chiropractic, etc."></textarea></div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Medical history — check all that apply</div>
+      <div class="checkbox-grid">
+        <label class="check-label"><input type="checkbox" name="med_hx" value="Cancer"> Cancer</label>
+        <label class="check-label"><input type="checkbox" name="med_hx" value="Arthritis"> Arthritis</label>
+        <label class="check-label"><input type="checkbox" name="med_hx" value="High blood pressure"> High blood pressure</label>
+        <label class="check-label"><input type="checkbox" name="med_hx" value="Diabetes"> Diabetes</label>
+        <label class="check-label"><input type="checkbox" name="med_hx" value="Breathing problems"> Breathing problems</label>
+        <label class="check-label"><input type="checkbox" name="med_hx" value="High cholesterol"> High cholesterol</label>
+        <label class="check-label"><input type="checkbox" name="med_hx" value="Hepatitis"> Hepatitis</label>
+        <label class="check-label"><input type="checkbox" name="med_hx" value="Heart disease"> Heart disease</label>
+        <label class="check-label"><input type="checkbox" name="med_hx" value="Venereal disease"> Venereal disease</label>
+        <label class="check-label"><input type="checkbox" name="med_hx" value="Alcoholism"> Alcoholism</label>
+        <label class="check-label"><input type="checkbox" name="med_hx" value="Emotional disorders"> Emotional disorders</label>
+        <label class="check-label"><input type="checkbox" name="med_hx" value="Seizures"> Seizures</label>
+        <label class="check-label"><input type="checkbox" name="med_hx" value="Depression or anxiety"> Depression or anxiety</label>
+        <label class="check-label"><input type="checkbox" name="med_hx" value="Thyroid disease"> Thyroid disease</label>
+        <label class="check-label"><input type="checkbox" name="med_hx" value="Digestive disorders"> Digestive disorders</label>
+      </div>
+      <div class="field-row" style="margin-top:12px"><div class="field"><label>Other</label><input type="text" id="med_hx_other"></div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Additional history</div>
+      <div class="field-row"><div class="field"><label>Surgeries or hospitalizations</label><textarea id="surgeries" style="min-height:52px" placeholder="Procedure, approximate year…"></textarea></div></div>
+      <div class="field-row"><div class="field"><label>Significant trauma</label><input type="text" id="trauma"></div></div>
+      <div class="field-row"><div class="field"><label>Allergies (drugs, chemicals, foods)</label><input type="text" id="allergies" placeholder="e.g. Penicillin, latex, shellfish"></div></div>
+      <div class="field-row"><div class="field"><label>Patient birth history</label><input type="text" id="birth_hx" placeholder="e.g. preterm, prolonged labor, C-section"></div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Occupation &amp; lifestyle</div>
+      <div class="field-row"><div class="field"><label>Occupational stressors (chemical, physical, psychological)</label><input type="text" id="occ_stress"></div></div>
+      <div class="field-row"><div class="field"><label>Regular exercise / fitness activities</label><textarea id="exercise" style="min-height:52px" placeholder="Type, frequency…"></textarea></div></div>
+      <div class="field-row cols-2">
+        <div class="field"><label>Cigarettes per day</label><input type="text" id="cigarettes" placeholder="0"></div>
+        <div class="field"><label>Coffee, tea or soda per week</label><input type="text" id="caffeine" placeholder="e.g. 2 coffees/day"></div>
+      </div>
+      <div class="field-row"><div class="field"><label>Non-medical drug use</label><input type="text" id="drug_use" placeholder="Describe if applicable"></div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Recent medicines &amp; supplements</div>
+      <div class="field-row"><div class="field"><label>All medications taken in the last 2 months (include vitamins, supplements, herbs)</label><textarea id="medications" style="min-height:80px" placeholder="Name, dose, frequency…"></textarea></div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Diet &amp; nutrition</div>
+      <div class="field-row"><div class="field"><label>Dietary restrictions</label><input type="text" id="diet_restrictions" placeholder="Vegetarian, gluten-free, allergies…"></div></div>
+      <div class="field-row cols-2">
+        <div class="field"><label>Typical breakfast</label><input type="text" id="breakfast"></div>
+        <div class="field"><label>Typical lunch</label><input type="text" id="lunch"></div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field"><label>Typical dinner</label><input type="text" id="dinner"></div>
+        <div class="field"><label>Typical snack</label><input type="text" id="snack"></div>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <div></div>
+      <button class="btn-next" onclick="goTo(1)">Next: Symptoms &#8594;</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 2: SYMPTOMS + BODY MAP ==================== -->
+  <div class="page" id="page1">
+
+    <div class="section">
+      <div class="section-title">Symptoms in the past 3 months — check all that apply</div>
+
+      <div class="subsection" style="border-top:none;padding-top:0">
+        <div class="subsection-title">General</div>
+        <div class="checkbox-grid">
+          <label class="check-label"><input type="checkbox" name="sx" value="Night sweats"> Night sweats</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Sweat easily"> Sweat easily</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Fevers"> Fevers</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Chills"> Chills</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Fatigue"> Fatigue</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Change in appetite"> Change in appetite</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Poor appetite"> Poor appetite</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Peculiar tastes"> Peculiar tastes</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Food cravings"> Food cravings</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Strong thirst"> Strong thirst</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Weight loss or gain"> Weight loss or gain</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Bleed or bruise easily"> Bleed / bruise easily</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Poor balance"> Poor balance</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Tremors"> Tremors</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Local weakness"> Local weakness</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Sudden energy drop"> Sudden energy drop</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Dizziness"> Dizziness</label>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Head, eyes, ears, nose &amp; throat</div>
+        <div class="checkbox-grid">
+          <label class="check-label"><input type="checkbox" name="sx" value="Concussions"> Concussions</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Migraines"> Migraines</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Headaches"> Headaches</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Poor vision"> Poor vision</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Cataracts"> Cataracts</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Eye pain"> Eye pain</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Eye strain"> Eye strain</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Night blindness"> Night blindness</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Color blindness"> Color blindness</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Blurry vision"> Blurry vision</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Spots in front of eyes"> Spots in front of eyes</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Earaches"> Earaches</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Ringing in ears"> Ringing in ears</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Poor hearing"> Poor hearing</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Sinus problems"> Sinus problems</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Nose bleeds"> Nose bleeds</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Recurrent sore throat"> Recurrent sore throat</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Grinding teeth"> Grinding teeth</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Facial pain"> Facial pain</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Jaw clicks"> Jaw clicks</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Sores on lips or tongue"> Sores on lips or tongue</label>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Cardiovascular</div>
+        <div class="checkbox-grid">
+          <label class="check-label"><input type="checkbox" name="sx" value="High blood pressure"> High blood pressure</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Low blood pressure"> Low blood pressure</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Irregular heartbeat"> Irregular heartbeat</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Blood clots"> Blood clots</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Swelling of hands"> Swelling of hands</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Swelling of feet"> Swelling of feet</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Chest pain"> Chest pain</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Fainting"> Fainting</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Cold hands or feet"> Cold hands or feet</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Phlebitis"> Phlebitis</label>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Respiratory</div>
+        <div class="checkbox-grid">
+          <label class="check-label"><input type="checkbox" name="sx" value="Cough"> Cough</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Bronchitis"> Bronchitis</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Coughing blood"> Coughing blood</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Pneumonia"> Pneumonia</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Asthma"> Asthma</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Phlegm"> Phlegm</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Pain with deep breath"> Pain with deep breath</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Wheezing"> Wheezing</label>
+        </div>
+        <div class="field-row" style="margin-top:10px"><div class="field"><label>Difficulty breathing while lying down?</label>
+          <div class="radio-group"><label class="check-label"><input type="radio" name="breathing_lying"> Yes</label><label class="check-label"><input type="radio" name="breathing_lying"> No</label></div>
+        </div></div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Skin &amp; hair</div>
+        <div class="checkbox-grid">
+          <label class="check-label"><input type="checkbox" name="sx" value="Rashes"> Rashes</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Itching"> Itching</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Acne"> Acne</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Hives"> Hives</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Eczema"> Eczema</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Hair loss"> Hair loss</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Ulcerations"> Ulcerations</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Dandruff"> Dandruff</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Dry skin"> Dry skin</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Recent moles"> Recent moles</label>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Gastrointestinal</div>
+        <div class="checkbox-grid">
+          <label class="check-label"><input type="checkbox" name="sx" value="Nausea"> Nausea</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Vomiting"> Vomiting</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Diarrhea"> Diarrhea</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Constipation"> Constipation</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Gas"> Gas</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Belching"> Belching</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Black stools"> Black stools</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Blood in stools"> Blood in stools</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Indigestion"> Indigestion</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Bad breath"> Bad breath</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Rectal pain"> Rectal pain</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Hemorrhoids"> Hemorrhoids</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Abdominal pain or cramps"> Abdominal pain / cramps</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Chronic laxative use"> Chronic laxative use</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Parasites"> Parasites</label>
+        </div>
+        <div class="field-row" style="margin-top:10px"><div class="field"><label>Bowel movement frequency, color &amp; texture</label><input type="text" id="bm_desc" placeholder="e.g. daily, brown, formed"></div></div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Genitourinary</div>
+        <div class="checkbox-grid">
+          <label class="check-label"><input type="checkbox" name="sx" value="Pain on urination"> Pain on urination</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Urgency to urinate"> Urgency to urinate</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Frequent urination"> Frequent urination</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Urine incontinence"> Urine incontinence</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Decrease in urine flow"> Decrease in urine flow</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Blood in urine"> Blood in urine</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Kidney stones"> Kidney stones</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Impotency"> Impotency</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Sores on genitals"> Sores on genitals</label>
+        </div>
+        <div class="field-row" style="margin-top:10px"><div class="field"><label>Do you wake to urinate at night?</label>
+          <div class="radio-group"><label class="check-label"><input type="radio" name="nocturia"> Yes</label><label class="check-label"><input type="radio" name="nocturia"> No</label></div>
+        </div></div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Neuropsychological</div>
+        <div class="checkbox-grid">
+          <label class="check-label"><input type="checkbox" name="sx" value="Depression"> Depression</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Anxiety"> Anxiety</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Stress"> Stress</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Bipolar"> Bipolar</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Seizures"> Seizures</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Irritability"> Irritability</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Numbness"> Numbness</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Lack of coordination"> Lack of coordination</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Loss of balance"> Loss of balance</label>
+        </div>
+        <div class="field-row" style="margin-top:10px"><div class="field"><label>Have you ever had emotional problems? If yes, please explain.</label><textarea id="emotional_hx" style="min-height:52px"></textarea></div></div>
+        <div class="field-row"><div class="field"><label>Have you ever attempted suicide?</label>
+          <div class="radio-group"><label class="check-label"><input type="radio" name="suicide_hx" value="no"> No</label><label class="check-label"><input type="radio" name="suicide_hx" value="yes"> Yes</label></div>
+        </div></div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Pregnancy &amp; gynecology</div>
+        <div class="checkbox-grid">
+          <label class="check-label"><input type="checkbox" name="sx" value="Breast lumps"> Breast lumps</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Vaginal infections"> Vaginal infections</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Vaginal discharge"> Vaginal discharge</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Breast tenderness"> Breast tenderness</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Pelvic infection"> Pelvic infection</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Infertility"> Infertility</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Hot flashes"> Hot flashes</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Fibroids"> Fibroids</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Endometriosis"> Endometriosis</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Ovarian cysts"> Ovarian cysts</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Painful period"> Painful period</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Irregular period"> Irregular period</label>
+          <label class="check-label"><input type="checkbox" name="sx" value="Clots during period"> Clots during period</label>
+        </div>
+        <div class="field-row cols-2" style="margin-top:10px">
+          <div class="field"><label>Birth control use / duration</label><input type="text" id="bc_use" placeholder="e.g. IUD, 3 years"></div>
+          <div class="field"><label>Number of pregnancies</label><input type="text" id="pregnancies"></div>
+        </div>
+        <div class="field-row cols-2">
+          <div class="field"><label>Number of births</label><input type="text" id="births"></div>
+          <div class="field"><label>Miscarriages</label><input type="text" id="miscarriages"></div>
+        </div>
+        <div class="field-row cols-2">
+          <div class="field"><label>Age of first menses</label><input type="text" id="menarche"></div>
+          <div class="field"><label>Days between periods</label><input type="text" id="cycle_length"></div>
+        </div>
+        <div class="field-row cols-2">
+          <div class="field"><label>Duration of period</label><input type="text" id="period_duration"></div>
+          <div class="field"><label>First day of last period</label><input type="date" id="lmp"></div>
+        </div>
+        <div class="field-row"><div class="field"><label>Last PAP smear</label><input type="text" id="last_pap" placeholder="Approximate date or year"></div></div>
+        <div class="field-row"><div class="field"><label>Changes in body or psyche prior to period?</label><textarea id="pms_changes" style="min-height:52px" placeholder="PMS symptoms, mood changes, etc."></textarea></div></div>
+      </div>
+    </div>
+
+    <!-- BODY MAP -->
+    <div class="section">
+      <div class="section-title">Painful or distressed areas</div>
+      <p class="map-instruction">Tap or click any area to mark it as painful or distressed. Use the view tabs for detail. Tap again to deselect.</p>
+      <div class="bmap-controls">
+        <button class="vbtn active" onclick="setView('front')" id="vbtn-front">Front</button>
+        <button class="vbtn" onclick="setView('back')" id="vbtn-back">Back</button>
+        <button class="vbtn" onclick="setView('head')" id="vbtn-head">Head</button>
+        <button class="vbtn" onclick="setView('hands')" id="vbtn-hands">Hands</button>
+        <button class="vbtn" onclick="setView('feet')" id="vbtn-feet">Feet</button>
+      </div>
+
+      <!-- FRONT -->
+      <div class="svg-panel active" id="panel-front"><div class="view-label">Front view</div>
+        <svg width="100%" viewBox="0 0 320 580" role="img"><title>Front body map</title><desc>Clickable front body regions</desc>
+          <ellipse cx="160" cy="52" rx="34" ry="40" class="bf"/>
+          <path d="M142,88 Q148,100 142,112 L178,112 Q172,100 178,88 Z" class="bf"/>
+          <path d="M108,112 Q100,118 98,140 L94,220 Q93,235 100,245 L108,300 L212,300 L220,245 Q227,235 226,220 L222,140 Q220,118 212,112 Z" class="bf"/>
+          <path d="M108,118 Q90,125 80,150 L72,210 Q70,225 76,235 L84,240 L88,230 L96,180 L108,145 Z" class="bf"/>
+          <path d="M76,235 Q70,248 68,270 L66,310 Q65,320 70,328 L78,330 L80,320 L84,280 L84,240 Z" class="bf"/>
+          <path d="M66,310 Q60,325 58,340 Q57,352 64,355 Q68,357 72,352 Q74,360 80,360 Q85,360 86,354 Q88,360 93,358 Q97,356 97,348 Q100,352 104,349 Q107,345 104,336 L100,320 L78,330 Z" class="bf"/>
+          <path d="M212,118 Q230,125 240,150 L248,210 Q250,225 244,235 L236,240 L232,230 L224,180 L212,145 Z" class="bf"/>
+          <path d="M244,235 Q250,248 252,270 L254,310 Q255,320 250,328 L242,330 L240,320 L236,280 L236,240 Z" class="bf"/>
+          <path d="M254,310 Q260,325 262,340 Q263,352 256,355 Q252,357 248,352 Q246,360 240,360 Q235,360 234,354 Q232,360 227,358 Q223,356 223,348 Q220,352 216,349 Q213,345 216,336 L220,320 L242,330 Z" class="bf"/>
+          <path d="M108,300 Q104,315 106,332 Q110,348 120,355 L200,355 Q210,348 214,332 Q216,315 212,300 Z" class="bf"/>
+          <path d="M120,355 Q112,365 108,390 L104,430 Q103,445 106,455 L116,458 L120,440 L128,405 L130,368 Z" class="bf"/>
+          <path d="M106,455 Q104,470 106,482 L118,484 L120,470 L116,458 Z" class="bf"/>
+          <path d="M106,482 Q103,498 104,514 L120,516 L120,500 L118,484 Z" class="bf"/>
+          <path d="M104,514 Q100,526 100,535 Q100,546 108,548 L130,548 Q136,546 136,538 Q136,530 130,528 L124,528 L120,516 Z" class="bf"/>
+          <ellipse cx="108" cy="550" rx="5" ry="5" class="bf"/><ellipse cx="116" cy="552" rx="4" ry="4" class="bf"/><ellipse cx="123" cy="552" rx="4" ry="4" class="bf"/><ellipse cx="130" cy="551" rx="3" ry="3" class="bf"/><ellipse cx="136" cy="549" rx="3" ry="3" class="bf"/>
+          <path d="M200,355 Q208,365 212,390 L216,430 Q217,445 214,455 L204,458 L200,440 L192,405 L190,368 Z" class="bf"/>
+          <path d="M214,455 Q216,470 214,482 L202,484 L200,470 L204,458 Z" class="bf"/>
+          <path d="M214,482 Q217,498 216,514 L200,516 L200,500 L202,484 Z" class="bf"/>
+          <path d="M216,514 Q220,526 220,535 Q220,546 212,548 L190,548 Q184,546 184,538 Q184,530 190,528 L196,528 L200,516 Z" class="bf"/>
+          <ellipse cx="212" cy="550" rx="5" ry="5" class="bf"/><ellipse cx="204" cy="552" rx="4" ry="4" class="bf"/><ellipse cx="197" cy="552" rx="4" ry="4" class="bf"/><ellipse cx="190" cy="551" rx="3" ry="3" class="bf"/><ellipse cx="184" cy="549" rx="3" ry="3" class="bf"/>
+          <g class="region" id="f-head" onclick="toggle(this,'Head')"><ellipse cx="160" cy="52" rx="34" ry="40" class="hl"/><text x="160" y="55" class="lbl">Head</text></g>
+          <g class="region" id="f-neck" onclick="toggle(this,'Neck')"><rect x="143" y="88" width="34" height="24" rx="4" class="hl"/><text x="160" y="104" class="lbl">Neck</text></g>
+          <g class="region" id="f-l-shoulder" onclick="toggle(this,'Left shoulder')"><ellipse cx="96" cy="128" rx="20" ry="14" class="hl"/><text x="96" y="132" class="lbl">L shoulder</text></g>
+          <g class="region" id="f-r-shoulder" onclick="toggle(this,'Right shoulder')"><ellipse cx="224" cy="128" rx="20" ry="14" class="hl"/><text x="224" y="132" class="lbl">R shoulder</text></g>
+          <g class="region" id="f-chest" onclick="toggle(this,'Chest')"><rect x="112" y="112" width="96" height="54" rx="4" class="hl"/><text x="160" y="143" class="lbl">Chest</text></g>
+          <g class="region" id="f-abdomen" onclick="toggle(this,'Abdomen')"><rect x="108" y="168" width="104" height="68" rx="4" class="hl"/><text x="160" y="207" class="lbl">Abdomen</text></g>
+          <g class="region" id="f-pelvis" onclick="toggle(this,'Lower abdomen / pelvis')"><rect x="108" y="238" width="104" height="62" rx="4" class="hl"/><text x="160" y="273" class="lbl">Lower abdomen</text></g>
+          <g class="region" id="f-l-arm" onclick="toggle(this,'Left upper arm')"><rect x="72" y="145" width="30" height="70" rx="4" class="hl"/><text x="87" y="185" class="lbl">L arm</text></g>
+          <g class="region" id="f-l-elbow" onclick="toggle(this,'Left elbow')"><ellipse cx="80" cy="225" rx="12" ry="10" class="hl"/><text x="80" y="228" class="lbl">L elbow</text></g>
+          <g class="region" id="f-l-forearm" onclick="toggle(this,'Left forearm')"><rect x="64" y="238" width="24" height="72" rx="4" class="hl"/><text x="76" y="278" class="lbl">L forearm</text></g>
+          <g class="region" id="f-l-wrist" onclick="toggle(this,'Left wrist')"><ellipse cx="76" cy="316" rx="14" ry="8" class="hl"/><text x="57" y="319" class="lbl">L wrist</text></g>
+          <g class="region" id="f-l-hand" onclick="toggle(this,'Left hand')"><ellipse cx="76" cy="342" rx="20" ry="16" class="hl"/><text x="76" y="345" class="lbl">L hand</text></g>
+          <g class="region" id="f-r-arm" onclick="toggle(this,'Right upper arm')"><rect x="218" y="145" width="30" height="70" rx="4" class="hl"/><text x="233" y="185" class="lbl">R arm</text></g>
+          <g class="region" id="f-r-elbow" onclick="toggle(this,'Right elbow')"><ellipse cx="240" cy="225" rx="12" ry="10" class="hl"/><text x="240" y="228" class="lbl">R elbow</text></g>
+          <g class="region" id="f-r-forearm" onclick="toggle(this,'Right forearm')"><rect x="232" y="238" width="24" height="72" rx="4" class="hl"/><text x="244" y="278" class="lbl">R forearm</text></g>
+          <g class="region" id="f-r-wrist" onclick="toggle(this,'Right wrist')"><ellipse cx="244" cy="316" rx="14" ry="8" class="hl"/><text x="263" y="319" class="lbl">R wrist</text></g>
+          <g class="region" id="f-r-hand" onclick="toggle(this,'Right hand')"><ellipse cx="244" cy="342" rx="20" ry="16" class="hl"/><text x="244" y="345" class="lbl">R hand</text></g>
+          <g class="region" id="f-groin" onclick="toggle(this,'Groin / hips')"><rect x="110" y="302" width="100" height="46" rx="4" class="hl"/><text x="160" y="330" class="lbl">Groin / hips</text></g>
+          <g class="region" id="f-l-thigh" onclick="toggle(this,'Left thigh')"><rect x="104" y="355" width="32" height="90" rx="4" class="hl"/><text x="120" y="403" class="lbl">L thigh</text></g>
+          <g class="region" id="f-l-knee" onclick="toggle(this,'Left knee')"><ellipse cx="112" cy="460" rx="14" ry="14" class="hl"/><text x="112" y="463" class="lbl">L knee</text></g>
+          <g class="region" id="f-l-shin" onclick="toggle(this,'Left shin')"><rect x="103" y="476" width="18" height="38" rx="4" class="hl"/><text x="89" y="498" class="lbl">L shin</text></g>
+          <g class="region" id="f-l-ankle" onclick="toggle(this,'Left ankle')"><ellipse cx="112" cy="520" rx="12" ry="8" class="hl"/><text x="92" y="523" class="lbl">L ankle</text></g>
+          <g class="region" id="f-l-foot" onclick="toggle(this,'Left foot')"><path d="M104,528 Q100,540 100,548 L136,548 L130,528 Z" class="hl"/><text x="118" y="542" class="lbl">L foot</text></g>
+          <g class="region" id="f-l-toes" onclick="toggle(this,'Left toes')"><ellipse cx="120" cy="556" rx="20" ry="8" class="hl"/><text x="120" y="559" class="lbl">L toes</text></g>
+          <g class="region" id="f-r-thigh" onclick="toggle(this,'Right thigh')"><rect x="184" y="355" width="32" height="90" rx="4" class="hl"/><text x="200" y="403" class="lbl">R thigh</text></g>
+          <g class="region" id="f-r-knee" onclick="toggle(this,'Right knee')"><ellipse cx="208" cy="460" rx="14" ry="14" class="hl"/><text x="208" y="463" class="lbl">R knee</text></g>
+          <g class="region" id="f-r-shin" onclick="toggle(this,'Right shin')"><rect x="199" y="476" width="18" height="38" rx="4" class="hl"/><text x="230" y="498" class="lbl">R shin</text></g>
+          <g class="region" id="f-r-ankle" onclick="toggle(this,'Right ankle')"><ellipse cx="208" cy="520" rx="12" ry="8" class="hl"/><text x="228" y="523" class="lbl">R ankle</text></g>
+          <g class="region" id="f-r-foot" onclick="toggle(this,'Right foot')"><path d="M216,528 Q220,540 220,548 L184,548 L190,528 Z" class="hl"/><text x="202" y="542" class="lbl">R foot</text></g>
+          <g class="region" id="f-r-toes" onclick="toggle(this,'Right toes')"><ellipse cx="200" cy="556" rx="20" ry="8" class="hl"/><text x="200" y="559" class="lbl">R toes</text></g>
+        </svg>
+      </div>
+
+      <!-- BACK -->
+      <div class="svg-panel" id="panel-back"><div class="view-label">Back view</div>
+        <svg width="100%" viewBox="0 0 320 580" role="img"><title>Back body map</title><desc>Clickable back body regions</desc>
+          <ellipse cx="160" cy="52" rx="34" ry="40" class="bf"/><path d="M142,88 Q148,100 142,112 L178,112 Q172,100 178,88 Z" class="bf"/><path d="M108,112 Q100,118 98,140 L94,220 Q93,235 100,245 L108,300 L212,300 L220,245 Q227,235 226,220 L222,140 Q220,118 212,112 Z" class="bf"/><path d="M108,118 Q90,125 80,150 L72,210 Q70,225 76,235 L84,240 L88,230 L96,180 L108,145 Z" class="bf"/><path d="M76,235 Q70,248 68,270 L66,310 Q65,320 70,328 L78,330 L80,320 L84,280 L84,240 Z" class="bf"/><path d="M66,310 Q60,325 58,340 Q57,352 64,355 Q68,357 72,352 Q74,360 80,360 Q85,360 86,354 Q88,360 93,358 Q97,356 97,348 Q100,352 104,349 Q107,345 104,336 L100,320 L78,330 Z" class="bf"/><path d="M212,118 Q230,125 240,150 L248,210 Q250,225 244,235 L236,240 L232,230 L224,180 L212,145 Z" class="bf"/><path d="M244,235 Q250,248 252,270 L254,310 Q255,320 250,328 L242,330 L240,320 L236,280 L236,240 Z" class="bf"/><path d="M254,310 Q260,325 262,340 Q263,352 256,355 Q252,357 248,352 Q246,360 240,360 Q235,360 234,354 Q232,360 227,358 Q223,356 223,348 Q220,352 216,349 Q213,345 216,336 L220,320 L242,330 Z" class="bf"/><path d="M108,300 Q104,315 106,332 Q110,348 120,355 L200,355 Q210,348 214,332 Q216,315 212,300 Z" class="bf"/><path d="M120,355 Q112,365 108,390 L104,430 Q103,445 106,455 L116,458 L120,440 L128,405 L130,368 Z" class="bf"/><path d="M106,455 Q104,470 106,482 L118,484 L120,470 L116,458 Z" class="bf"/><path d="M106,482 Q103,498 104,514 L120,516 L120,500 L118,484 Z" class="bf"/><path d="M104,514 Q98,528 98,542 Q98,555 110,557 L126,557 Q132,554 132,544 Q132,532 124,528 L120,516 Z" class="bf"/><path d="M200,355 Q208,365 212,390 L216,430 Q217,445 214,455 L204,458 L200,440 L192,405 L190,368 Z" class="bf"/><path d="M214,455 Q216,470 214,482 L202,484 L200,470 L204,458 Z" class="bf"/><path d="M214,482 Q217,498 216,514 L200,516 L200,500 L202,484 Z" class="bf"/><path d="M216,514 Q222,528 222,542 Q222,555 210,557 L194,557 Q188,554 188,544 Q188,532 196,528 L200,516 Z" class="bf"/>
+          <g class="region" id="b-head" onclick="toggle(this,'Head (back)')"><ellipse cx="160" cy="52" rx="34" ry="40" class="hl"/><text x="160" y="55" class="lbl">Head</text></g>
+          <g class="region" id="b-neck" onclick="toggle(this,'Neck (back)')"><rect x="143" y="88" width="34" height="24" rx="4" class="hl"/><text x="160" y="104" class="lbl">Neck</text></g>
+          <g class="region" id="b-l-shoulder" onclick="toggle(this,'Left shoulder (back)')"><ellipse cx="96" cy="128" rx="20" ry="14" class="hl"/><text x="96" y="132" class="lbl">L shoulder</text></g>
+          <g class="region" id="b-r-shoulder" onclick="toggle(this,'Right shoulder (back)')"><ellipse cx="224" cy="128" rx="20" ry="14" class="hl"/><text x="224" y="132" class="lbl">R shoulder</text></g>
+          <g class="region" id="b-upper-back" onclick="toggle(this,'Upper back')"><rect x="112" y="115" width="96" height="55" rx="4" class="hl"/><text x="160" y="146" class="lbl">Upper back</text></g>
+          <g class="region" id="b-mid-back" onclick="toggle(this,'Mid back')"><rect x="108" y="172" width="104" height="60" rx="4" class="hl"/><text x="160" y="206" class="lbl">Mid back</text></g>
+          <g class="region" id="b-low-back" onclick="toggle(this,'Lower back')"><rect x="108" y="234" width="104" height="64" rx="4" class="hl"/><text x="160" y="270" class="lbl">Lower back</text></g>
+          <g class="region" id="b-sacrum" onclick="toggle(this,'Sacrum / tailbone')"><rect x="112" y="300" width="96" height="50" rx="4" class="hl"/><text x="160" y="329" class="lbl">Sacrum / tailbone</text></g>
+          <g class="region" id="b-l-glute" onclick="toggle(this,'Left glute / hip')"><ellipse cx="122" cy="345" rx="20" ry="14" class="hl"/><text x="122" y="349" class="lbl">L glute</text></g>
+          <g class="region" id="b-r-glute" onclick="toggle(this,'Right glute / hip')"><ellipse cx="198" cy="345" rx="20" ry="14" class="hl"/><text x="198" y="349" class="lbl">R glute</text></g>
+          <g class="region" id="b-l-arm" onclick="toggle(this,'Left upper arm (back)')"><rect x="72" y="145" width="30" height="70" rx="4" class="hl"/><text x="87" y="185" class="lbl">L arm</text></g>
+          <g class="region" id="b-l-elbow" onclick="toggle(this,'Left elbow (back)')"><ellipse cx="80" cy="225" rx="12" ry="10" class="hl"/><text x="80" y="228" class="lbl">L elbow</text></g>
+          <g class="region" id="b-l-forearm" onclick="toggle(this,'Left forearm (back)')"><rect x="64" y="238" width="24" height="72" rx="4" class="hl"/><text x="76" y="278" class="lbl">L forearm</text></g>
+          <g class="region" id="b-l-wrist" onclick="toggle(this,'Left wrist (back)')"><ellipse cx="76" cy="316" rx="14" ry="8" class="hl"/><text x="57" y="319" class="lbl">L wrist</text></g>
+          <g class="region" id="b-l-hand" onclick="toggle(this,'Left hand (back)')"><ellipse cx="76" cy="342" rx="20" ry="16" class="hl"/><text x="76" y="345" class="lbl">L hand</text></g>
+          <g class="region" id="b-r-arm" onclick="toggle(this,'Right upper arm (back)')"><rect x="218" y="145" width="30" height="70" rx="4" class="hl"/><text x="233" y="185" class="lbl">R arm</text></g>
+          <g class="region" id="b-r-elbow" onclick="toggle(this,'Right elbow (back)')"><ellipse cx="240" cy="225" rx="12" ry="10" class="hl"/><text x="240" y="228" class="lbl">R elbow</text></g>
+          <g class="region" id="b-r-forearm" onclick="toggle(this,'Right forearm (back)')"><rect x="232" y="238" width="24" height="72" rx="4" class="hl"/><text x="244" y="278" class="lbl">R forearm</text></g>
+          <g class="region" id="b-r-wrist" onclick="toggle(this,'Right wrist (back)')"><ellipse cx="244" cy="316" rx="14" ry="8" class="hl"/><text x="263" y="319" class="lbl">R wrist</text></g>
+          <g class="region" id="b-r-hand" onclick="toggle(this,'Right hand (back)')"><ellipse cx="244" cy="342" rx="20" ry="16" class="hl"/><text x="244" y="345" class="lbl">R hand</text></g>
+          <g class="region" id="b-l-hamstring" onclick="toggle(this,'Left hamstring')"><rect x="104" y="355" width="32" height="90" rx="4" class="hl"/><text x="120" y="403" class="lbl">L hamstring</text></g>
+          <g class="region" id="b-l-knee" onclick="toggle(this,'Left knee (back)')"><ellipse cx="112" cy="460" rx="14" ry="14" class="hl"/><text x="112" y="463" class="lbl">L knee</text></g>
+          <g class="region" id="b-l-calf" onclick="toggle(this,'Left calf')"><rect x="103" y="476" width="18" height="38" rx="4" class="hl"/><text x="89" y="498" class="lbl">L calf</text></g>
+          <g class="region" id="b-l-ankle" onclick="toggle(this,'Left ankle (back)')"><ellipse cx="112" cy="518" rx="12" ry="8" class="hl"/><text x="90" y="521" class="lbl">L ankle</text></g>
+          <g class="region" id="b-l-heel" onclick="toggle(this,'Left heel / sole')"><path d="M98,530 Q98,558 128,558 L128,528 Q116,528 112,526 Z" class="hl"/><text x="113" y="548" class="lbl">L heel</text></g>
+          <g class="region" id="b-r-hamstring" onclick="toggle(this,'Right hamstring')"><rect x="184" y="355" width="32" height="90" rx="4" class="hl"/><text x="200" y="403" class="lbl">R hamstring</text></g>
+          <g class="region" id="b-r-knee" onclick="toggle(this,'Right knee (back)')"><ellipse cx="208" cy="460" rx="14" ry="14" class="hl"/><text x="208" y="463" class="lbl">R knee</text></g>
+          <g class="region" id="b-r-calf" onclick="toggle(this,'Right calf')"><rect x="199" y="476" width="18" height="38" rx="4" class="hl"/><text x="230" y="498" class="lbl">R calf</text></g>
+          <g class="region" id="b-r-ankle" onclick="toggle(this,'Right ankle (back)')"><ellipse cx="208" cy="518" rx="12" ry="8" class="hl"/><text x="230" y="521" class="lbl">R ankle</text></g>
+          <g class="region" id="b-r-heel" onclick="toggle(this,'Right heel / sole')"><path d="M222,530 Q222,558 192,558 L192,528 Q204,528 208,526 Z" class="hl"/><text x="207" y="548" class="lbl">R heel</text></g>
+        </svg>
+      </div>
+
+      <!-- HEAD DETAIL -->
+      <div class="svg-panel" id="panel-head"><div class="view-label">Head detail</div>
+        <svg width="100%" viewBox="0 0 320 370" role="img"><title>Head detail map</title><desc>Head regions including tongue</desc>
+          <ellipse cx="160" cy="130" rx="90" ry="110" class="bf"/><ellipse cx="72" cy="130" rx="12" ry="20" class="bf"/><ellipse cx="248" cy="130" rx="12" ry="20" class="bf"/>
+          <ellipse cx="128" cy="110" rx="18" ry="10" class="bl"/><ellipse cx="192" cy="110" rx="18" ry="10" class="bl"/>
+          <path d="M155,122 Q152,148 148,158 Q155,165 172,165 Q189,158 172,148 Q168,122 165,122" class="bl"/>
+          <path d="M136,185 Q160,200 184,185" class="bl"/>
+          <path d="M100,195 Q110,230 160,240 Q210,230 220,195" class="bl"/>
+          <rect x="130" y="238" width="60" height="50" rx="4" class="bf"/>
+          <rect x="98" y="292" width="124" height="60" rx="6" class="bf"/>
+          <ellipse cx="160" cy="322" rx="46" ry="20" class="bl"/>
+          <g class="region" id="h-scalp" onclick="toggle(this,'Scalp / top of head')"><ellipse cx="160" cy="66" rx="80" ry="54" class="hl"/><text x="160" y="69" class="lbl">Scalp</text></g>
+          <g class="region" id="h-forehead" onclick="toggle(this,'Forehead')"><rect x="110" y="44" width="100" height="36" rx="4" class="hl"/><text x="160" y="66" class="lbl">Forehead</text></g>
+          <g class="region" id="h-temple-l" onclick="toggle(this,'Left temple')"><ellipse cx="90" cy="100" rx="22" ry="18" class="hl"/><text x="90" y="103" class="lbl">L temple</text></g>
+          <g class="region" id="h-temple-r" onclick="toggle(this,'Right temple')"><ellipse cx="230" cy="100" rx="22" ry="18" class="hl"/><text x="230" y="103" class="lbl">R temple</text></g>
+          <g class="region" id="h-eye-l" onclick="toggle(this,'Left eye / orbit')"><ellipse cx="128" cy="110" rx="22" ry="13" class="hl"/><text x="128" y="113" class="lbl">L eye</text></g>
+          <g class="region" id="h-eye-r" onclick="toggle(this,'Right eye / orbit')"><ellipse cx="192" cy="110" rx="22" ry="13" class="hl"/><text x="192" y="113" class="lbl">R eye</text></g>
+          <g class="region" id="h-sinus" onclick="toggle(this,'Sinuses / nose')"><ellipse cx="160" cy="150" rx="20" ry="22" class="hl"/><text x="160" y="153" class="lbl">Sinuses / nose</text></g>
+          <g class="region" id="h-cheek-l" onclick="toggle(this,'Left cheek / jaw')"><ellipse cx="108" cy="170" rx="24" ry="26" class="hl"/><text x="108" y="173" class="lbl">L cheek / jaw</text></g>
+          <g class="region" id="h-cheek-r" onclick="toggle(this,'Right cheek / jaw')"><ellipse cx="212" cy="170" rx="24" ry="26" class="hl"/><text x="212" y="173" class="lbl">R cheek / jaw</text></g>
+          <g class="region" id="h-ear-l" onclick="toggle(this,'Left ear')"><ellipse cx="72" cy="130" rx="14" ry="22" class="hl"/><text x="72" y="133" class="lbl">L ear</text></g>
+          <g class="region" id="h-ear-r" onclick="toggle(this,'Right ear')"><ellipse cx="248" cy="130" rx="14" ry="22" class="hl"/><text x="248" y="133" class="lbl">R ear</text></g>
+          <g class="region" id="h-mouth" onclick="toggle(this,'Mouth / lips / teeth')"><ellipse cx="160" cy="190" rx="32" ry="16" class="hl"/><text x="160" y="193" class="lbl">Mouth / lips / teeth</text></g>
+          <g class="region" id="h-occiput" onclick="toggle(this,'Occiput / base of skull')"><ellipse cx="160" cy="218" rx="40" ry="16" class="hl"/><text x="160" y="221" class="lbl">Occiput / base of skull</text></g>
+          <g class="region" id="h-neck" onclick="toggle(this,'Neck / throat')"><rect x="128" y="238" width="64" height="48" rx="4" class="hl"/><text x="160" y="266" class="lbl">Neck / throat</text></g>
+          <g class="region" id="h-tongue" onclick="toggle(this,'Tongue')"><ellipse cx="160" cy="322" rx="48" ry="22" class="hl"/><text x="160" y="325" class="lbl">Tongue</text></g>
+        </svg>
+      </div>
+
+      <!-- HANDS DETAIL -->
+      <div class="svg-panel" id="panel-hands"><div class="view-label">Hands detail</div>
+        <svg width="100%" viewBox="0 0 320 420" role="img"><title>Hands detail map</title><desc>Individual finger, wrist, and palm regions</desc>
+          <text x="80" y="18" class="lbl" style="font-size:11px;font-weight:600;fill:#888780">Left hand</text>
+          <rect x="52" y="24" width="56" height="24" rx="6" class="bf"/>
+          <path d="M44,48 Q40,80 42,110 Q44,130 55,138 L105,138 Q116,130 118,110 Q120,80 116,48 Z" class="bf"/>
+          <rect x="47" y="100" width="14" height="52" rx="7" class="bf"/><rect x="63" y="94" width="14" height="58" rx="7" class="bf"/><rect x="79" y="92" width="14" height="60" rx="7" class="bf"/><rect x="95" y="94" width="13" height="56" rx="6" class="bf"/>
+          <path d="M42,70 Q30,64 26,74 Q22,88 30,100 Q38,108 46,104 L48,90 Z" class="bf"/>
+          <text x="240" y="18" class="lbl" style="font-size:11px;font-weight:600;fill:#888780">Right hand</text>
+          <rect x="212" y="24" width="56" height="24" rx="6" class="bf"/>
+          <path d="M204,48 Q200,80 202,110 Q204,130 215,138 L265,138 Q276,130 278,110 Q280,80 276,48 Z" class="bf"/>
+          <rect x="209" y="100" width="13" height="56" rx="6" class="bf"/><rect x="224" y="94" width="14" height="58" rx="7" class="bf"/><rect x="240" y="92" width="14" height="60" rx="7" class="bf"/><rect x="256" y="94" width="14" height="52" rx="7" class="bf"/>
+          <path d="M278,70 Q290,64 294,74 Q298,88 290,100 Q282,108 274,104 L272,90 Z" class="bf"/>
+          <line x1="10" y1="165" x2="310" y2="165" style="stroke:#D3D1C7;stroke-width:0.5"/>
+          <text x="160" y="160" class="lbl" style="font-size:10px;text-anchor:middle">— Palm / back view —</text>
+          <text x="80" y="184" class="lbl" style="font-size:10px">Left palm</text>
+          <path d="M44,192 Q40,224 42,254 Q44,274 65,282 L105,282 Q116,270 118,254 Q120,224 116,192 Z" class="bf"/>
+          <ellipse cx="80" cy="284" rx="26" ry="10" class="bf"/>
+          <text x="240" y="184" class="lbl" style="font-size:10px">Right palm</text>
+          <path d="M204,192 Q200,224 202,254 Q204,274 225,282 L265,282 Q276,270 278,254 Q280,224 276,192 Z" class="bf"/>
+          <ellipse cx="240" cy="284" rx="26" ry="10" class="bf"/>
+          <text x="80" y="308" class="lbl" style="font-size:10px">Knuckles</text>
+          <text x="240" y="308" class="lbl" style="font-size:10px">Knuckles</text>
+          <ellipse cx="51" cy="316" rx="7" ry="6" class="bf"/><ellipse cx="65" cy="314" rx="7" ry="6" class="bf"/><ellipse cx="80" cy="313" rx="7" ry="6" class="bf"/><ellipse cx="95" cy="314" rx="7" ry="6" class="bf"/><ellipse cx="109" cy="316" rx="6" ry="6" class="bf"/>
+          <ellipse cx="211" cy="316" rx="6" ry="6" class="bf"/><ellipse cx="225" cy="314" rx="7" ry="6" class="bf"/><ellipse cx="240" cy="313" rx="7" ry="6" class="bf"/><ellipse cx="255" cy="314" rx="7" ry="6" class="bf"/><ellipse cx="269" cy="316" rx="7" ry="6" class="bf"/>
+          <g class="region" id="hd-l-wrist" onclick="toggle(this,'Left wrist')"><rect x="50" y="22" width="60" height="28" rx="6" class="hl"/><text x="80" y="39" class="lbl">L wrist</text></g>
+          <g class="region" id="hd-l-thumb" onclick="toggle(this,'Left thumb')"><path d="M42,66 Q28,60 24,72 Q20,88 30,102 Q40,112 50,106 L52,88 Z" class="hl"/><text x="32" y="86" class="lbl">Thumb</text></g>
+          <g class="region" id="hd-l-index" onclick="toggle(this,'Left index finger')"><rect x="45" y="96" width="18" height="56" rx="8" class="hl"/><text x="54" y="126" class="lbl">Index</text></g>
+          <g class="region" id="hd-l-middle" onclick="toggle(this,'Left middle finger')"><rect x="61" y="90" width="18" height="62" rx="8" class="hl"/><text x="70" y="123" class="lbl">Middle</text></g>
+          <g class="region" id="hd-l-ring" onclick="toggle(this,'Left ring finger')"><rect x="77" y="88" width="18" height="64" rx="8" class="hl"/><text x="86" y="122" class="lbl">Ring</text></g>
+          <g class="region" id="hd-l-pinky" onclick="toggle(this,'Left pinky finger')"><rect x="93" y="90" width="17" height="60" rx="8" class="hl"/><text x="101" y="122" class="lbl">Pinky</text></g>
+          <g class="region" id="hd-l-palm" onclick="toggle(this,'Left palm')"><rect x="44" y="48" width="76" height="56" rx="4" class="hl"/><text x="82" y="80" class="lbl">L palm</text></g>
+          <g class="region" id="hd-r-wrist" onclick="toggle(this,'Right wrist')"><rect x="210" y="22" width="60" height="28" rx="6" class="hl"/><text x="240" y="39" class="lbl">R wrist</text></g>
+          <g class="region" id="hd-r-thumb" onclick="toggle(this,'Right thumb')"><path d="M278,66 Q292,60 296,72 Q300,88 290,102 Q280,112 270,106 L268,88 Z" class="hl"/><text x="288" y="86" class="lbl">Thumb</text></g>
+          <g class="region" id="hd-r-pinky" onclick="toggle(this,'Right pinky finger')"><rect x="210" y="96" width="17" height="56" rx="8" class="hl"/><text x="218" y="126" class="lbl">Pinky</text></g>
+          <g class="region" id="hd-r-ring" onclick="toggle(this,'Right ring finger')"><rect x="222" y="90" width="18" height="62" rx="8" class="hl"/><text x="231" y="123" class="lbl">Ring</text></g>
+          <g class="region" id="hd-r-middle" onclick="toggle(this,'Right middle finger')"><rect x="238" y="88" width="18" height="64" rx="8" class="hl"/><text x="247" y="122" class="lbl">Middle</text></g>
+          <g class="region" id="hd-r-index" onclick="toggle(this,'Right index finger')"><rect x="256" y="90" width="18" height="60" rx="8" class="hl"/><text x="265" y="122" class="lbl">Index</text></g>
+          <g class="region" id="hd-r-palm" onclick="toggle(this,'Right palm')"><rect x="200" y="48" width="76" height="56" rx="4" class="hl"/><text x="238" y="80" class="lbl">R palm</text></g>
+          <g class="region" id="hd-l-palm-back" onclick="toggle(this,'Left palm (back)')"><path d="M44,192 Q40,224 42,258 Q44,276 68,284 L106,284 Q118,272 120,256 Q122,226 118,192 Z" class="hl"/><text x="80" y="242" class="lbl">L palm (back)</text></g>
+          <g class="region" id="hd-l-knuckles" onclick="toggle(this,'Left knuckles')"><ellipse cx="80" cy="315" rx="36" ry="12" class="hl"/><text x="80" y="318" class="lbl">L knuckles</text></g>
+          <g class="region" id="hd-r-palm-back" onclick="toggle(this,'Right palm (back)')"><path d="M200,192 Q196,224 198,258 Q200,276 224,284 L262,284 Q274,272 276,256 Q278,226 274,192 Z" class="hl"/><text x="236" y="242" class="lbl">R palm (back)</text></g>
+          <g class="region" id="hd-r-knuckles" onclick="toggle(this,'Right knuckles')"><ellipse cx="240" cy="315" rx="36" ry="12" class="hl"/><text x="240" y="318" class="lbl">R knuckles</text></g>
+        </svg>
+      </div>
+
+      <!-- FEET DETAIL -->
+      <div class="svg-panel" id="panel-feet"><div class="view-label">Feet detail</div>
+        <svg width="100%" viewBox="0 0 320 380" role="img"><title>Feet detail map</title><desc>Individual toe, arch, heel, and ankle regions</desc>
+          <text x="80" y="20" class="lbl" style="font-size:11px;font-weight:600;fill:#888780">Left foot</text>
+          <ellipse cx="80" cy="50" rx="28" ry="16" class="bf"/>
+          <path d="M52,58 Q48,100 50,130 Q52,155 62,165 L98,165 Q108,155 110,130 Q112,100 108,58 Z" class="bf"/>
+          <ellipse cx="80" cy="170" rx="30" ry="12" class="bf"/>
+          <ellipse cx="56" cy="182" rx="9" ry="12" class="bf"/><ellipse cx="68" cy="186" rx="8" ry="11" class="bf"/><ellipse cx="80" cy="188" rx="8" ry="11" class="bf"/><ellipse cx="92" cy="186" rx="7" ry="10" class="bf"/><ellipse cx="103" cy="183" rx="6" ry="9" class="bf"/>
+          <text x="240" y="20" class="lbl" style="font-size:11px;font-weight:600;fill:#888780">Right foot</text>
+          <ellipse cx="240" cy="50" rx="28" ry="16" class="bf"/>
+          <path d="M212,58 Q208,100 210,130 Q212,155 222,165 L258,165 Q268,155 270,130 Q272,100 268,58 Z" class="bf"/>
+          <ellipse cx="240" cy="170" rx="30" ry="12" class="bf"/>
+          <ellipse cx="264" cy="182" rx="9" ry="12" class="bf"/><ellipse cx="252" cy="186" rx="8" ry="11" class="bf"/><ellipse cx="240" cy="188" rx="8" ry="11" class="bf"/><ellipse cx="228" cy="186" rx="7" ry="10" class="bf"/><ellipse cx="217" cy="183" rx="6" ry="9" class="bf"/>
+          <line x1="10" y1="220" x2="310" y2="220" style="stroke:#D3D1C7;stroke-width:0.5"/>
+          <text x="160" y="215" class="lbl" style="font-size:10px;text-anchor:middle">— Sole / bottom view —</text>
+          <text x="80" y="238" class="lbl" style="font-size:10px">Left sole</text>
+          <path d="M52,248 Q48,280 50,308 Q52,328 65,335 Q74,340 86,338 Q98,335 104,325 Q110,308 108,280 Q106,252 100,248 Z" class="bf"/>
+          <ellipse cx="76" cy="334" rx="18" ry="10" class="bf"/>
+          <text x="240" y="238" class="lbl" style="font-size:10px">Right sole</text>
+          <path d="M212,248 Q208,280 210,308 Q212,328 225,335 Q234,340 246,338 Q258,335 264,325 Q270,308 268,280 Q266,252 260,248 Z" class="bf"/>
+          <ellipse cx="236" cy="334" rx="18" ry="10" class="bf"/>
+          <g class="region" id="fd-l-ankle" onclick="toggle(this,'Left ankle')"><ellipse cx="80" cy="50" rx="28" ry="16" class="hl"/><text x="80" y="53" class="lbl">L ankle</text></g>
+          <g class="region" id="fd-l-top" onclick="toggle(this,'Left foot top')"><path d="M54,62 Q50,102 52,130 Q54,152 64,162 L96,162 Q106,152 108,130 Q110,102 106,62 Z" class="hl"/><text x="80" y="118" class="lbl">L foot top</text></g>
+          <g class="region" id="fd-l-ball" onclick="toggle(this,'Left ball of foot')"><ellipse cx="80" cy="170" rx="30" ry="12" class="hl"/><text x="80" y="173" class="lbl">L ball</text></g>
+          <g class="region" id="fd-l-big-toe" onclick="toggle(this,'Left big toe')"><ellipse cx="56" cy="182" rx="10" ry="13" class="hl"/><text x="56" y="185" class="lbl">Big toe</text></g>
+          <g class="region" id="fd-l-toe2" onclick="toggle(this,'Left 2nd toe')"><ellipse cx="68" cy="186" rx="9" ry="12" class="hl"/><text x="68" y="189" class="lbl">2nd</text></g>
+          <g class="region" id="fd-l-toe3" onclick="toggle(this,'Left 3rd toe')"><ellipse cx="80" cy="188" rx="9" ry="12" class="hl"/><text x="80" y="191" class="lbl">3rd</text></g>
+          <g class="region" id="fd-l-toe4" onclick="toggle(this,'Left 4th toe')"><ellipse cx="92" cy="186" rx="8" ry="11" class="hl"/><text x="92" y="189" class="lbl">4th</text></g>
+          <g class="region" id="fd-l-pinky" onclick="toggle(this,'Left pinky toe')"><ellipse cx="103" cy="183" rx="7" ry="10" class="hl"/><text x="103" y="186" class="lbl">Pinky</text></g>
+          <g class="region" id="fd-r-ankle" onclick="toggle(this,'Right ankle')"><ellipse cx="240" cy="50" rx="28" ry="16" class="hl"/><text x="240" y="53" class="lbl">R ankle</text></g>
+          <g class="region" id="fd-r-top" onclick="toggle(this,'Right foot top')"><path d="M214,62 Q210,102 212,130 Q214,152 224,162 L256,162 Q266,152 268,130 Q270,102 266,62 Z" class="hl"/><text x="240" y="118" class="lbl">R foot top</text></g>
+          <g class="region" id="fd-r-ball" onclick="toggle(this,'Right ball of foot')"><ellipse cx="240" cy="170" rx="30" ry="12" class="hl"/><text x="240" y="173" class="lbl">R ball</text></g>
+          <g class="region" id="fd-r-big-toe" onclick="toggle(this,'Right big toe')"><ellipse cx="264" cy="182" rx="10" ry="13" class="hl"/><text x="264" y="185" class="lbl">Big toe</text></g>
+          <g class="region" id="fd-r-toe2" onclick="toggle(this,'Right 2nd toe')"><ellipse cx="252" cy="186" rx="9" ry="12" class="hl"/><text x="252" y="189" class="lbl">2nd</text></g>
+          <g class="region" id="fd-r-toe3" onclick="toggle(this,'Right 3rd toe')"><ellipse cx="240" cy="188" rx="9" ry="12" class="hl"/><text x="240" y="191" class="lbl">3rd</text></g>
+          <g class="region" id="fd-r-toe4" onclick="toggle(this,'Right 4th toe')"><ellipse cx="228" cy="186" rx="8" ry="11" class="hl"/><text x="228" y="189" class="lbl">4th</text></g>
+          <g class="region" id="fd-r-pinky" onclick="toggle(this,'Right pinky toe')"><ellipse cx="217" cy="183" rx="7" ry="10" class="hl"/><text x="217" y="186" class="lbl">Pinky</text></g>
+          <g class="region" id="fd-l-arch" onclick="toggle(this,'Left arch / sole')"><path d="M54,252 Q50,282 52,308 Q54,326 68,334 L102,330 Q110,318 108,282 Q106,256 98,252 Z" class="hl"/><text x="76" y="295" class="lbl">L arch / sole</text></g>
+          <g class="region" id="fd-l-heel" onclick="toggle(this,'Left heel')"><ellipse cx="76" cy="334" rx="20" ry="12" class="hl"/><text x="76" y="337" class="lbl">L heel</text></g>
+          <g class="region" id="fd-r-arch" onclick="toggle(this,'Right arch / sole')"><path d="M214,252 Q210,282 212,308 Q214,326 228,334 L262,330 Q270,318 268,282 Q266,256 258,252 Z" class="hl"/><text x="236" y="295" class="lbl">R arch / sole</text></g>
+          <g class="region" id="fd-r-heel" onclick="toggle(this,'Right heel')"><ellipse cx="236" cy="334" rx="20" ry="12" class="hl"/><text x="236" y="337" class="lbl">R heel</text></g>
+        </svg>
+      </div>
+
+      <div class="map-legend">
+        <div class="leg-item"><div class="leg-sw" style="background:#EEEDFE;border:1px solid #AFA9EC"></div> Not selected</div>
+        <div class="leg-item"><div class="leg-sw" style="background:#7F77DD"></div> Selected / painful</div>
+      </div>
+      <div class="tags-wrap">
+        <div class="tags-title">Selected areas</div>
+        <div class="tags" id="tag-list"><span class="map-empty" id="map-empty">No areas selected yet</span></div>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-back" onclick="goTo(0)">&#8592; Back</button>
+      <button class="btn-next" onclick="goTo(2)">Next: Legal &amp; privacy &#8594;</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 3: LEGAL & PRIVACY ==================== -->
+  <div class="page" id="page2">
+
+    <div class="section">
+      <div class="section-title">Texas acupuncture scope-of-practice notice</div>
+      <div class="policy-box">
+        <p>Prior to providing acupuncture services, Texas acupuncturists are required by state law to determine that a patient has been evaluated for the condition being treated by a physician or dentist within the last 12 months, or referred by a chiropractor within the last 30 days.</p>
+        <p style="margin-top:8px;font-size:12px;color:#888">(Pursuant to 22 TAC §183.7 of the Texas State Board of Acupuncture Examiners' rules relating to Scope of Practice and Tex. Occ. Code Ann., §205.351)</p>
+      </div>
+      <div class="yn-block">
+        <div class="yn-text">I have been evaluated by a physician or dentist for the condition being treated within the last 12 months. I recognize that a physician should evaluate me for the condition being treated by my acupuncturist.</div>
+        <div class="yn-row"><label><input type="radio" name="physician_eval"> Yes</label><label><input type="radio" name="physician_eval"> No</label></div>
+      </div>
+      <div style="text-align:center;font-size:13px;color:var(--gray-text);padding:6px">— OR —</div>
+      <div class="yn-block">
+        <div class="yn-text">I have received a referral from my chiropractor within the last 30 days for acupuncture.</div>
+        <div class="yn-row"><label><input type="radio" name="chiro_referral"> Yes</label><label><input type="radio" name="chiro_referral"> No</label></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Notice of privacy practices &amp; consent to share health information</div>
+      <div class="policy-box">
+        <p>I acknowledge that I have been provided access to Mind + Body Acupuncture &amp; Wellness PLLC's <strong>Notice of Privacy Practices</strong>. I understand that I have the right to review the Notice of Privacy Practices prior to signing this form.</p>
+        <p style="margin-top:8px">I understand that Mind + Body Acupuncture &amp; Wellness staff may need to contact me with information related to my treatment. If this contact is made by phone and I am not available, a message will be left on my voicemail if possible. I understand that if I wish my health care information to be disclosed to any other individual, I must give written permission to do so below.</p>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field"><label>Patient name (print)</label><input type="text" id="privacy_name"></div>
+        <div class="field"><label>Date</label><input type="date" id="privacy_date"></div>
+      </div>
+      <div class="field"><label>Patient signature</label>
+        <div class="sig-wrap"><canvas class="sig-pad" id="sig_privacy"></canvas><div class="sig-hint" id="hint_privacy">Sign here with your mouse or finger</div></div>
+        <button class="sig-clear" onclick="clearSig('sig_privacy','hint_privacy')">Clear signature</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Permission to disclose health information to other parties <span class="opt">optional</span></div>
+      <p style="font-size:13px;color:var(--gray-text);margin-bottom:14px">Complete only if you want your health information shared with someone else. This authorization is voluntary.</p>
+      <div class="field-row"><div class="field"><label>Name &amp; relation to you</label><input type="text" id="disclose_name" placeholder="e.g. Jane Smith — Spouse"></div></div>
+      <div class="field-row cols-2">
+        <div class="field"><label>Their telephone number</label><input type="tel" id="disclose_phone"></div>
+        <div class="field"><label>Fax (for medical provider)</label><input type="tel" id="disclose_fax"></div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field"><label>Patient signature</label>
+          <div class="sig-wrap"><canvas class="sig-pad" id="sig_disclose"></canvas><div class="sig-hint" id="hint_disclose">Sign here if completing this section</div></div>
+          <button class="sig-clear" onclick="clearSig('sig_disclose','hint_disclose')">Clear signature</button>
+        </div>
+        <div class="field"><label>Date</label><input type="date" id="disclose_date"></div>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-back" onclick="goTo(1)">&#8592; Back</button>
+      <button class="btn-next" onclick="goTo(3)">Next: Cancellation policy &#8594;</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 4: CANCELLATION POLICY ==================== -->
+  <div class="page" id="page3">
+
+    <div class="section">
+      <div class="section-title">Cancellation, reschedule &amp; no-show policy</div>
+      <div class="policy-box">
+        <p>At Mind + Body Acupuncture &amp; Wellness, we understand that your time is valuable, and ours is too. No-shows and last-minute cancellations make it difficult to provide the best care for you and our other patients. We are always happy to work with you to reschedule whenever necessary, and having sufficient notice allows us to better serve you.</p>
+        <p style="margin-top:10px"><strong>Cancellations, no-shows, and rescheduled sessions are subject to a FULL charge if not received at least 48 hours in advance.</strong> This is necessary because your appointment time is held exclusively for you. You will be responsible for the entire session fee if you cancel with less than 48 hours' notice. Please note that insurance does not reimburse for missed appointments.</p>
+      </div>
+
+      <p style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px">Please initial each item below to acknowledge and accept this policy:</p>
+
+      <div class="initial-row">
+        <input type="text" class="initial-input" id="initial_1" maxlength="5" placeholder="Initials">
+        <span class="initial-text">I agree to place a valid, active credit or debit card on file at Mind + Body Acupuncture &amp; Wellness, PLLC.</span>
+      </div>
+      <div class="initial-row">
+        <input type="text" class="initial-input" id="initial_2" maxlength="5" placeholder="Initials">
+        <span class="initial-text">If I do not request cancellations or rescheduled sessions with at least 48 hours' advance notice, I give Mind + Body Acupuncture &amp; Wellness permission to charge my card on file for the full fee for the scheduled service.</span>
+      </div>
+
+      <div class="field-row cols-2" style="margin-top:16px">
+        <div class="field"><label>Patient name (print)</label><input type="text" id="cancel_name"></div>
+        <div class="field"><label>Today's date</label><input type="date" id="cancel_date"></div>
+      </div>
+      <div class="field" style="margin-top:12px"><label>Patient signature</label>
+        <div class="sig-wrap"><canvas class="sig-pad" id="sig_cancel"></canvas><div class="sig-hint" id="hint_cancel">Sign here with your mouse or finger</div></div>
+        <button class="sig-clear" onclick="clearSig('sig_cancel','hint_cancel')">Clear signature</button>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-back" onclick="goTo(2)">&#8592; Back</button>
+      <button class="btn-submit" onclick="submitForms()">Submit all forms &#10003;</button>
+    </div>
+  </div>
+
+  <!-- ==================== SUCCESS / REVIEW ==================== -->
+  <div class="page" id="page4">
+    <div class="section">
+      <div class="success">
+        <div class="success-icon"><i class="ti ti-check"></i></div>
+        <h2 id="success-heading">Sending your forms…</h2>
+        <p id="success-msg">Please wait while we securely send your information to Mind + Body Acupuncture &amp; Wellness.</p>
+        <div id="success-detail" style="display:none">
+          <p>Your new patient paperwork has been received. We'll review it before your appointment and may be in touch if we have any questions.</p>
+          <p style="margin-top:10px;font-size:13px;color:#AAA">Questions? Call us at (512) 541-9673</p>
+        </div>
+        <div id="success-error" style="display:none;margin-top:12px">
+          <p style="color:#C0392B;font-size:13px;margin-bottom:12px">Something went wrong sending your form. Please copy your answers below and email them to <strong>info@mindplusbodyacu.com</strong>.</p>
+          <div class="summary-box" id="summary-box"></div>
+          <button class="btn-copy" onclick="copySummary()">&#128203; Copy to clipboard</button>
+          <a class="btn-email" id="mailto-link" href="#">&#9993; Open in email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /form-wrap -->
+
+<script>
+/* ========== COUNTRY / STATE DATA ========== */
+const COUNTRIES=[["Afghanistan","AF","+93"],["Albania","AL","+355"],["Algeria","DZ","+213"],["Andorra","AD","+376"],["Angola","AO","+244"],["Antigua and Barbuda","AG","+1-268"],["Argentina","AR","+54"],["Armenia","AM","+374"],["Australia","AU","+61"],["Austria","AT","+43"],["Azerbaijan","AZ","+994"],["Bahamas","BS","+1-242"],["Bahrain","BH","+973"],["Bangladesh","BD","+880"],["Barbados","BB","+1-246"],["Belarus","BY","+375"],["Belgium","BE","+32"],["Belize","BZ","+501"],["Benin","BJ","+229"],["Bhutan","BT","+975"],["Bolivia","BO","+591"],["Bosnia and Herzegovina","BA","+387"],["Botswana","BW","+267"],["Brazil","BR","+55"],["Brunei","BN","+673"],["Bulgaria","BG","+359"],["Burkina Faso","BF","+226"],["Burundi","BI","+257"],["Cambodia","KH","+855"],["Cameroon","CM","+237"],["Canada","CA","+1"],["Cape Verde","CV","+238"],["Central African Republic","CF","+236"],["Chad","TD","+235"],["Chile","CL","+56"],["China","CN","+86"],["Colombia","CO","+57"],["Comoros","KM","+269"],["Congo","CG","+242"],["Costa Rica","CR","+506"],["Croatia","HR","+385"],["Cuba","CU","+53"],["Cyprus","CY","+357"],["Czech Republic","CZ","+420"],["Denmark","DK","+45"],["Djibouti","DJ","+253"],["Dominica","DM","+1-767"],["Dominican Republic","DO","+1-809"],["Ecuador","EC","+593"],["Egypt","EG","+20"],["El Salvador","SV","+503"],["Equatorial Guinea","GQ","+240"],["Eritrea","ER","+291"],["Estonia","EE","+372"],["Ethiopia","ET","+251"],["Fiji","FJ","+679"],["Finland","FI","+358"],["France","FR","+33"],["Gabon","GA","+241"],["Gambia","GM","+220"],["Georgia","GE","+995"],["Germany","DE","+49"],["Ghana","GH","+233"],["Greece","GR","+30"],["Grenada","GD","+1-473"],["Guatemala","GT","+502"],["Guinea","GN","+224"],["Guinea-Bissau","GW","+245"],["Guyana","GY","+592"],["Haiti","HT","+509"],["Honduras","HN","+504"],["Hungary","HU","+36"],["Iceland","IS","+354"],["India","IN","+91"],["Indonesia","ID","+62"],["Iran","IR","+98"],["Iraq","IQ","+964"],["Ireland","IE","+353"],["Israel","IL","+972"],["Italy","IT","+39"],["Jamaica","JM","+1-876"],["Japan","JP","+81"],["Jordan","JO","+962"],["Kazakhstan","KZ","+7"],["Kenya","KE","+254"],["Kiribati","KI","+686"],["Kuwait","KW","+965"],["Kyrgyzstan","KG","+996"],["Laos","LA","+856"],["Latvia","LV","+371"],["Lebanon","LB","+961"],["Lesotho","LS","+266"],["Liberia","LR","+231"],["Libya","LY","+218"],["Liechtenstein","LI","+423"],["Lithuania","LT","+370"],["Luxembourg","LU","+352"],["Madagascar","MG","+261"],["Malawi","MW","+265"],["Malaysia","MY","+60"],["Maldives","MV","+960"],["Mali","ML","+223"],["Malta","MT","+356"],["Marshall Islands","MH","+692"],["Mauritania","MR","+222"],["Mauritius","MU","+230"],["Mexico","MX","+52"],["Micronesia","FM","+691"],["Moldova","MD","+373"],["Monaco","MC","+377"],["Mongolia","MN","+976"],["Montenegro","ME","+382"],["Morocco","MA","+212"],["Mozambique","MZ","+258"],["Myanmar","MM","+95"],["Namibia","NA","+264"],["Nauru","NR","+674"],["Nepal","NP","+977"],["Netherlands","NL","+31"],["New Zealand","NZ","+64"],["Nicaragua","NI","+505"],["Niger","NE","+227"],["Nigeria","NG","+234"],["North Korea","KP","+850"],["North Macedonia","MK","+389"],["Norway","NO","+47"],["Oman","OM","+968"],["Pakistan","PK","+92"],["Palau","PW","+680"],["Palestine","PS","+970"],["Panama","PA","+507"],["Papua New Guinea","PG","+675"],["Paraguay","PY","+595"],["Peru","PE","+51"],["Philippines","PH","+63"],["Poland","PL","+48"],["Portugal","PT","+351"],["Qatar","QA","+974"],["Romania","RO","+40"],["Russia","RU","+7"],["Rwanda","RW","+250"],["Saint Kitts and Nevis","KN","+1-869"],["Saint Lucia","LC","+1-758"],["Saint Vincent and the Grenadines","VC","+1-784"],["Samoa","WS","+685"],["San Marino","SM","+378"],["Sao Tome and Principe","ST","+239"],["Saudi Arabia","SA","+966"],["Senegal","SN","+221"],["Serbia","RS","+381"],["Seychelles","SC","+248"],["Sierra Leone","SL","+232"],["Singapore","SG","+65"],["Slovakia","SK","+421"],["Slovenia","SI","+386"],["Solomon Islands","SB","+677"],["Somalia","SO","+252"],["South Africa","ZA","+27"],["South Korea","KR","+82"],["South Sudan","SS","+211"],["Spain","ES","+34"],["Sri Lanka","LK","+94"],["Sudan","SD","+249"],["Suriname","SR","+597"],["Sweden","SE","+46"],["Switzerland","CH","+41"],["Syria","SY","+963"],["Taiwan","TW","+886"],["Tajikistan","TJ","+992"],["Tanzania","TZ","+255"],["Thailand","TH","+66"],["Timor-Leste","TL","+670"],["Togo","TG","+228"],["Tonga","TO","+676"],["Trinidad and Tobago","TT","+1-868"],["Tunisia","TN","+216"],["Turkey","TR","+90"],["Turkmenistan","TM","+993"],["Tuvalu","TV","+688"],["Uganda","UG","+256"],["Ukraine","UA","+380"],["United Arab Emirates","AE","+971"],["United Kingdom","GB","+44"],["United States","US","+1"],["Uruguay","UY","+598"],["Uzbekistan","UZ","+998"],["Vanuatu","VU","+678"],["Vatican City","VA","+379"],["Venezuela","VE","+58"],["Vietnam","VN","+84"],["Yemen","YE","+967"],["Zambia","ZM","+260"],["Zimbabwe","ZW","+263"]];
+
+const REGIONS={US:[["Alabama","AL"],["Alaska","AK"],["Arizona","AZ"],["Arkansas","AR"],["California","CA"],["Colorado","CO"],["Connecticut","CT"],["Delaware","DE"],["Florida","FL"],["Georgia","GA"],["Hawaii","HI"],["Idaho","ID"],["Illinois","IL"],["Indiana","IN"],["Iowa","IA"],["Kansas","KS"],["Kentucky","KY"],["Louisiana","LA"],["Maine","ME"],["Maryland","MD"],["Massachusetts","MA"],["Michigan","MI"],["Minnesota","MN"],["Mississippi","MS"],["Missouri","MO"],["Montana","MT"],["Nebraska","NE"],["Nevada","NV"],["New Hampshire","NH"],["New Jersey","NJ"],["New Mexico","NM"],["New York","NY"],["North Carolina","NC"],["North Dakota","ND"],["Ohio","OH"],["Oklahoma","OK"],["Oregon","OR"],["Pennsylvania","PA"],["Rhode Island","RI"],["South Carolina","SC"],["South Dakota","SD"],["Tennessee","TN"],["Texas","TX"],["Utah","UT"],["Vermont","VT"],["Virginia","VA"],["Washington","WA"],["West Virginia","WV"],["Wisconsin","WI"],["Wyoming","WY"],["District of Columbia","DC"],["Puerto Rico","PR"],["U.S. Virgin Islands","VI"],["Guam","GU"],["American Samoa","AS"]],CA:[["Alberta","AB"],["British Columbia","BC"],["Manitoba","MB"],["New Brunswick","NB"],["Newfoundland and Labrador","NL"],["Northwest Territories","NT"],["Nova Scotia","NS"],["Nunavut","NU"],["Ontario","ON"],["Prince Edward Island","PE"],["Quebec","QC"],["Saskatchewan","SK"],["Yukon","YT"]],AU:[["Australian Capital Territory","ACT"],["New South Wales","NSW"],["Northern Territory","NT"],["Queensland","QLD"],["South Australia","SA"],["Tasmania","TAS"],["Victoria","VIC"],["Western Australia","WA"]],GB:[["England","ENG"],["Scotland","SCT"],["Wales","WLS"],["Northern Ireland","NIR"]],IN:[["Andhra Pradesh","AP"],["Arunachal Pradesh","AR"],["Assam","AS"],["Bihar","BR"],["Chhattisgarh","CG"],["Goa","GA"],["Gujarat","GJ"],["Haryana","HR"],["Himachal Pradesh","HP"],["Jharkhand","JH"],["Karnataka","KA"],["Kerala","KL"],["Madhya Pradesh","MP"],["Maharashtra","MH"],["Manipur","MN"],["Meghalaya","ML"],["Mizoram","MZ"],["Nagaland","NL"],["Odisha","OR"],["Punjab","PB"],["Rajasthan","RJ"],["Sikkim","SK"],["Tamil Nadu","TN"],["Telangana","TS"],["Tripura","TR"],["Uttar Pradesh","UP"],["Uttarakhand","UK"],["West Bengal","WB"],["Delhi","DL"],["Jammu and Kashmir","JK"],["Ladakh","LA"],["Puducherry","PY"]],BR:[["Acre","AC"],["Alagoas","AL"],["Amapá","AP"],["Amazonas","AM"],["Bahia","BA"],["Ceará","CE"],["Distrito Federal","DF"],["Espírito Santo","ES"],["Goiás","GO"],["Maranhão","MA"],["Mato Grosso","MT"],["Mato Grosso do Sul","MS"],["Minas Gerais","MG"],["Pará","PA"],["Paraíba","PB"],["Paraná","PR"],["Pernambuco","PE"],["Piauí","PI"],["Rio de Janeiro","RJ"],["Rio Grande do Norte","RN"],["Rio Grande do Sul","RS"],["Rondônia","RO"],["Roraima","RR"],["Santa Catarina","SC"],["São Paulo","SP"],["Sergipe","SE"],["Tocantins","TO"]],MX:[["Aguascalientes","AGS"],["Baja California","BC"],["Baja California Sur","BCS"],["Campeche","CAMP"],["Chiapas","CHIS"],["Chihuahua","CHIH"],["Coahuila","COAH"],["Colima","COL"],["Durango","DGO"],["Guanajuato","GTO"],["Guerrero","GRO"],["Hidalgo","HGO"],["Jalisco","JAL"],["Mexico City","CDMX"],["Mexico State","MEX"],["Michoacán","MICH"],["Morelos","MOR"],["Nayarit","NAY"],["Nuevo León","NL"],["Oaxaca","OAX"],["Puebla","PUE"],["Querétaro","QRO"],["Quintana Roo","QROO"],["San Luis Potosí","SLP"],["Sinaloa","SIN"],["Sonora","SON"],["Tabasco","TAB"],["Tamaulipas","TAMPS"],["Tlaxcala","TLAX"],["Veracruz","VER"],["Yucatán","YUC"],["Zacatecas","ZAC"]],DE:[["Baden-Württemberg","BW"],["Bavaria","BY"],["Berlin","BE"],["Brandenburg","BB"],["Bremen","HB"],["Hamburg","HH"],["Hesse","HE"],["Lower Saxony","NI"],["Mecklenburg-Vorpommern","MV"],["North Rhine-Westphalia","NW"],["Rhineland-Palatinate","RP"],["Saarland","SL"],["Saxony","SN"],["Saxony-Anhalt","ST"],["Schleswig-Holstein","SH"],["Thuringia","TH"]],FR:[["Auvergne-Rhône-Alpes","ARA"],["Bourgogne-Franche-Comté","BFC"],["Brittany","BRE"],["Centre-Val de Loire","CVL"],["Corsica","COR"],["Grand Est","GES"],["Hauts-de-France","HDF"],["Île-de-France","IDF"],["Normandy","NOR"],["Nouvelle-Aquitaine","NAQ"],["Occitanie","OCC"],["Pays de la Loire","PDL"],["Provence-Alpes-Côte d'Azur","PAC"]],NZ:[["Auckland","AKL"],["Bay of Plenty","BOP"],["Canterbury","CAN"],["Gisborne","GIS"],["Hawke's Bay","HKB"],["Manawatu-Whanganui","MWT"],["Marlborough","MBH"],["Nelson","NSN"],["Northland","NTL"],["Otago","OTA"],["Southland","STL"],["Taranaki","TKI"],["Tasman","TAS"],["Waikato","WKO"],["Wellington","WGN"],["West Coast","WTC"]],ZA:[["Eastern Cape","EC"],["Free State","FS"],["Gauteng","GP"],["KwaZulu-Natal","KZN"],["Limpopo","LP"],["Mpumalanga","MP"],["North West","NW"],["Northern Cape","NC"],["Western Cape","WC"]]};
+
+function buildPrefixSelect(selId,defaultCode){
+  const sel=document.getElementById(selId);if(!sel)return;sel.innerHTML='';
+  COUNTRIES.forEach(([name,code,prefix])=>{
+    const opt=document.createElement('option');opt.value=prefix;opt.textContent=prefix+' — '+name;
+    if(code===defaultCode)opt.selected=true;sel.appendChild(opt);
+  });
+}
+function buildCountrySelect(){
+  const sel=document.getElementById('country_select');if(!sel)return;
+  sel.innerHTML='<option value="">Select country…</option>';
+  COUNTRIES.forEach(([name,code])=>{
+    const opt=document.createElement('option');opt.value=code;opt.textContent=name;
+    if(code==='US')opt.selected=true;sel.appendChild(opt);
+  });
+}
+function buildStateSelect(countryCode){
+  const sel=document.getElementById('state_select');if(!sel)return;sel.innerHTML='';
+  const list=REGIONS[countryCode]||[];
+  const blank=document.createElement('option');blank.value='';
+  blank.textContent=list.length>0?'Select…':'Leave blank if not applicable';
+  sel.appendChild(blank);
+  list.forEach(([name,code])=>{
+    const opt=document.createElement('option');opt.value=code;opt.textContent=name;
+    if(countryCode==='US'&&code==='TX')opt.selected=true;sel.appendChild(opt);
+  });
+}
+buildPrefixSelect('primary_prefix','US');
+buildPrefixSelect('secondary_prefix','US');
+buildCountrySelect();
+buildStateSelect('US');
+document.getElementById('country_select').addEventListener('change',function(){
+  buildStateSelect(this.value);
+  buildPrefixSelect('primary_prefix',this.value);
+  buildPrefixSelect('secondary_prefix',this.value);
+});
+
+/* ========== PAGE NAV ========== */
+let currentPage=0;
+function goTo(n){
+  document.getElementById('page'+currentPage).classList.remove('active');
+  const oldTab=document.getElementById('tab'+currentPage);
+  if(oldTab){oldTab.classList.remove('active');if(currentPage<n)oldTab.classList.add('done');}
+  currentPage=n;
+  const pg=document.getElementById('page'+currentPage);if(pg)pg.classList.add('active');
+  const tb=document.getElementById('tab'+currentPage);if(tb){tb.classList.add('active');tb.classList.remove('done');}
+  const pct=Math.min(25+(currentPage/4)*100,100);
+  document.getElementById('prog').style.width=pct+'%';
+  const labels=['Step 1 of 4: Health history','Step 2 of 4: Symptoms','Step 3 of 4: Legal & privacy','Step 4 of 4: Cancellation policy','Complete'];
+  document.getElementById('prog-label').textContent=labels[currentPage]||'';
+  window.scrollTo(0,0);
+}
+
+/* ========== BODY MAP ========== */
+const selected=new Map();
+function toggle(el,label){
+  const id=el.id;
+  if(el.classList.contains('sel')){el.classList.remove('sel');selected.delete(id);}
+  else{el.classList.add('sel');selected.set(id,label);}
+  renderTags();
+}
+function removeRegion(id){
+  selected.delete(id);const el=document.getElementById(id);if(el)el.classList.remove('sel');renderTags();
+}
+function renderTags(){
+  const list=document.getElementById('tag-list');const hint=document.getElementById('map-empty');
+  if(selected.size===0){list.innerHTML='';list.appendChild(hint);hint.style.display='';return;}
+  hint.style.display='none';list.innerHTML='';
+  selected.forEach((label,id)=>{
+    const tag=document.createElement('span');tag.className='tag';
+    tag.innerHTML=label+'<button onclick="removeRegion(\''+id+'\')" aria-label="Remove '+label+'">×</button>';
+    list.appendChild(tag);
+  });
+}
+function setView(v){
+  ['front','back','head','hands','feet'].forEach(name=>{
+    document.getElementById('panel-'+name).classList.toggle('active',name===v);
+    document.getElementById('vbtn-'+name).classList.toggle('active',name===v);
+  });
+}
+
+/* ========== SIGNATURES ========== */
+const sigStates={};
+function clearSig(cid,hid){
+  const c=document.getElementById(cid);if(!c)return;
+  const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);
+  sigStates[cid]=false;document.getElementById(hid).style.display='block';
+}
+function initSig(cid,hid){
+  const canvas=document.getElementById(cid);const hint=document.getElementById(hid);
+  if(!canvas||!hint)return;
+  let drawing=false;const dpr=window.devicePixelRatio||1;
+  function resize(){
+    const rect=canvas.getBoundingClientRect();
+    canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;
+    const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+    ctx.strokeStyle='#534AB7';ctx.lineWidth=2;ctx.lineCap='round';ctx.lineJoin='round';
+  }
+  resize();
+  function pos(e){const r=canvas.getBoundingClientRect();const s=e.touches?e.touches[0]:e;return{x:s.clientX-r.left,y:s.clientY-r.top};}
+  function start(e){e.preventDefault();drawing=true;hint.style.display='none';const ctx=canvas.getContext('2d');const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);}
+  function move(e){if(!drawing)return;e.preventDefault();const ctx=canvas.getContext('2d');const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();sigStates[cid]=true;}
+  function stop(){drawing=false;}
+  canvas.addEventListener('mousedown',start);canvas.addEventListener('mousemove',move);canvas.addEventListener('mouseup',stop);canvas.addEventListener('mouseleave',stop);
+  canvas.addEventListener('touchstart',start,{passive:false});canvas.addEventListener('touchmove',move,{passive:false});canvas.addEventListener('touchend',stop);
+}
+['sig_privacy','sig_disclose','sig_cancel'].forEach(id=>initSig(id,'hint_'+id.replace('sig_','')));
+
+/* ========== HELPERS ========== */
+function val(id){const el=document.getElementById(id);return el?el.value.trim():'';}
+function checked(name){return Array.from(document.querySelectorAll('input[name="'+name+'"]:checked')).map(e=>e.value).join(', ');}
+function radio(name){const el=document.querySelector('input[name="'+name+'"]:checked');return el?el.value:'';}
+
+/* ========== SUBMIT ========== */
+function buildSummary(){
+  const bodyAreas=selected.size>0?Array.from(selected.values()).join(', '):'None selected';
+  const firstName=val('first_name');const lastName=val('last_name');
+  const prefName=val('preferred_name');
+  const displayName=firstName+' '+lastName+(prefName?' (prefers: '+prefName+')':'');
+  const prefix1=document.getElementById('primary_prefix')?document.getElementById('primary_prefix').value:'';
+  const prefix2=document.getElementById('secondary_prefix')?document.getElementById('secondary_prefix').value:'';
+  const countryEl=document.getElementById('country_select');
+  const country=countryEl?countryEl.options[countryEl.selectedIndex].text:'';
+  const stateEl=document.getElementById('state_select');
+  const state=stateEl?stateEl.options[stateEl.selectedIndex].text:'';
+  const lines=[
+    '═══════════════════════════════════════════',
+    '  MIND + BODY ACUPUNCTURE & WELLNESS',
+    '  NEW PATIENT INTAKE — '+new Date().toLocaleDateString(),
+    '═══════════════════════════════════════════',
+    '',
+    '─── PERSONAL INFORMATION ───',
+    'Name: '+displayName,
+    'Date of birth: '+val('dob'),
+    'Pronouns: '+val('pronouns'),
+    'Primary phone: '+prefix1+' '+val('primary_phone'),
+    'Secondary phone: '+(val('secondary_phone')?prefix2+' '+val('secondary_phone'):'—'),
+    'Email: '+val('email'),
+    'Address: '+val('address')+', '+val('city')+', '+state+', '+val('zip')+', '+country,
+    'Place of birth: '+val('pob'),
+    'Marital status: '+val('marital'),
+    'Height: '+val('height')+'  Weight: '+val('weight')+'  Age: '+val('age'),
+    'Occupation: '+val('occupation'),
+    'Primary care provider: '+(val('pcp')||'—'),
+    'Referred by: '+(val('referred_by')||'—'),
+    'Emergency contact: '+val('emergency_contact'),
+    'Acupuncture before: '+radio('acu_before'),
+    '',
+    '─── MAIN COMPLAINT ───',
+    'Complaint: '+val('main_complaint'),
+    'Duration: '+val('onset')+'  Known cause: '+(val('known_cause')||'—'),
+    'Interference with daily life: '+val('interference'),
+    'Diagnosis: '+(val('diagnosis')||'—'),
+    'Treatments tried: '+(val('treatments_tried')||'—'),
+    '',
+    '─── MEDICAL HISTORY ───',
+    checked('med_hx')||'None reported',
+    val('med_hx_other')?'Other: '+val('med_hx_other'):'',
+    'Surgeries/hospitalizations: '+(val('surgeries')||'—'),
+    'Significant trauma: '+(val('trauma')||'—'),
+    'Allergies: '+(val('allergies')||'—'),
+    'Birth history: '+(val('birth_hx')||'—'),
+    '',
+    '─── LIFESTYLE ───',
+    'Occupational stressors: '+(val('occ_stress')||'—'),
+    'Exercise: '+(val('exercise')||'—'),
+    'Cigarettes/day: '+(val('cigarettes')||'0')+'  Caffeine: '+(val('caffeine')||'—'),
+    'Non-medical drug use: '+(val('drug_use')||'—'),
+    '',
+    '─── MEDICATIONS & SUPPLEMENTS ───',
+    val('medications')||'None reported',
+    '',
+    '─── DIET & NUTRITION ───',
+    'Restrictions: '+(val('diet_restrictions')||'—'),
+    'Breakfast: '+(val('breakfast')||'—')+'  Lunch: '+(val('lunch')||'—'),
+    'Dinner: '+(val('dinner')||'—')+'  Snack: '+(val('snack')||'—'),
+    '',
+    '─── SYMPTOMS (PAST 3 MONTHS) ───',
+    checked('sx')||'None reported',
+    'Bowel movements: '+(val('bm_desc')||'—'),
+    'Wake to urinate: '+radio('nocturia'),
+    'Breathing difficulty lying down: '+radio('breathing_lying'),
+    'Emotional history: '+(val('emotional_hx')||'—'),
+    'Suicide attempt history: '+radio('suicide_hx'),
+    '',
+    '─── GYNECOLOGY ───',
+    'Birth control: '+(val('bc_use')||'—'),
+    'Pregnancies: '+(val('pregnancies')||'—')+'  Births: '+(val('births')||'—')+'  Miscarriages: '+(val('miscarriages')||'—'),
+    'First menses age: '+(val('menarche')||'—')+'  Cycle length: '+(val('cycle_length')||'—')+'  Period duration: '+(val('period_duration')||'—'),
+    'Last period: '+(val('lmp')||'—')+'  Last PAP: '+(val('last_pap')||'—'),
+    'Pre-period changes: '+(val('pms_changes')||'—'),
+    '',
+    '─── PAINFUL / DISTRESSED AREAS ───',
+    bodyAreas,
+    '',
+    '─── LEGAL & PRIVACY ───',
+    'Physician/dentist eval within 12 months: '+radio('physician_eval'),
+    'Chiropractor referral within 30 days: '+radio('chiro_referral'),
+    'Privacy consent signed: YES',
+    val('disclose_name')?'Disclosure authorized to: '+val('disclose_name'):'No third-party disclosure authorized',
+    '',
+    '─── CANCELLATION POLICY ───',
+    'Initial 1 (card on file): '+val('initial_1'),
+    'Initial 2 (48hr policy): '+val('initial_2'),
+    'Cancellation policy signed: YES',
+    '',
+    '═══════════════════════════════════════════',
+    'Submitted: '+new Date().toLocaleString(),
+    '═══════════════════════════════════════════'
+  ];
+  return lines.join('\n');
+}
+
+async function submitForms(){
+  const firstName=val('first_name');const lastName=val('last_name');
+  if(!firstName||!lastName){alert('Please enter your first and last name in the Health History section.');goTo(0);return;}
+  if(!sigStates['sig_privacy']||!sigStates['sig_cancel']){alert('Please sign both the privacy consent and the cancellation policy before submitting.');return;}
+
+  /* Show page 4 in loading state */
+  ['tab0','tab1','tab2','tab3'].forEach(id=>{const t=document.getElementById(id);if(t){t.classList.remove('active');t.classList.add('done');}});
+  document.getElementById('page'+currentPage).classList.remove('active');
+  currentPage=4;document.getElementById('page4').classList.add('active');
+  document.getElementById('prog').style.width='100%';
+  document.getElementById('prog-label').textContent='Submitting…';
+  window.scrollTo(0,0);
+
+  const summary=buildSummary();
+  const subject='New Patient Intake — '+firstName+' '+lastName;
+
+  /* ── Web3Forms submission ── */
+  /* IMPORTANT: Replace YOUR_ACCESS_KEY_HERE with your actual Web3Forms access key */
+  /* Get your free key at: https://web3forms.com — enter info@mindplusbodyacu.com */
+  const WEB3FORMS_KEY = '8cae0f54-78d2-4eb9-9612-65e6f7b80ae3';
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: subject,
+        from_name: firstName+' '+lastName,
+        email: val('email')||'noreply@mindplusbodyacu.com',
+        message: summary,
+        botcheck: ''
+      })
+    });
+    const data = await res.json();
+    if(data.success){
+      document.getElementById('success-heading').textContent='Forms received!';
+      document.getElementById('success-msg').textContent='';
+      document.getElementById('success-detail').style.display='block';
+      document.getElementById('prog-label').textContent='Complete!';
+    } else {
+      throw new Error(data.message||'Submission failed');
+    }
+  } catch(err) {
+    /* Fallback: show manual copy/email option */
+    document.getElementById('success-heading').textContent='Almost there!';
+    document.getElementById('success-msg').textContent='';
+    document.getElementById('success-error').style.display='block';
+    const summaryBox=document.getElementById('summary-box');
+    if(summaryBox) summaryBox.textContent=summary;
+    const mailtoLink=document.getElementById('mailto-link');
+    if(mailtoLink) mailtoLink.href='mailto:info@mindplusbodyacu.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(summary);
+    document.getElementById('prog-label').textContent='Action needed';
+  }
+}
+
+function copySummary(){
+  const box=document.getElementById('summary-box');
+  const text=box?box.textContent:buildSummary();
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.querySelector('.btn-copy');if(btn){btn.textContent='✓ Copied!';setTimeout(()=>btn.textContent='📋 Copy to clipboard',2500);}
+  }).catch(()=>{if(box){box.select&&box.select();document.execCommand('copy');}});
+}
+
+/* ========== INIT DATES ========== */
+const today=new Date().toISOString().split('T')[0];
+['today_date','privacy_date','cancel_date'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=today;});
+</script>
+</body>
+</html>
