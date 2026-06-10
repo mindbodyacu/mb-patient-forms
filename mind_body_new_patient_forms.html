@@ -1318,70 +1318,111 @@ function setView(v){
 const sigStates={};
 function clearSig(cid,hid){
   const c=document.getElementById(cid);if(!c)return;
-  const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);
-  sigStates[cid]=false;document.getElementById(hid).style.display='block';
+  const ctx=c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  sigStates[cid]=false;
+  document.getElementById(hid).style.display='block';
 }
 function initSig(cid,hid){
-  const canvas=document.getElementById(cid);const hint=document.getElementById(hid);
+  const canvas=document.getElementById(cid);
+  const hint=document.getElementById(hid);
   if(!canvas||!hint)return;
-  let drawing=false;let initialized=false;
-  const dpr=window.devicePixelRatio||1;
 
-  function resizeCanvas(){
-    const rect=canvas.getBoundingClientRect();
-    if(rect.width===0) return; // still hidden, skip
-    // Only reset if size actually changed (avoid clearing a drawn sig)
-    if(canvas.width===Math.round(rect.width*dpr) && canvas.height===Math.round(rect.height*dpr)) return;
-    // Save existing drawing
-    const tempCanvas=document.createElement('canvas');
-    tempCanvas.width=canvas.width;tempCanvas.height=canvas.height;
-    tempCanvas.getContext('2d').drawImage(canvas,0,0);
-    canvas.width=Math.round(rect.width*dpr);
-    canvas.height=Math.round(rect.height*dpr);
+  let drawing=false;
+  let lastX=0,lastY=0;
+
+  function setupCanvas(){
+    // Use CSS pixel width directly — no devicePixelRatio scaling in iframes
+    // as it causes coordinate mismatches
+    const w=canvas.offsetWidth||canvas.parentElement.offsetWidth||400;
+    const h=120;
+    canvas.width=w;
+    canvas.height=h;
+    canvas.style.width=w+'px';
+    canvas.style.height=h+'px';
+    styleCtx();
+  }
+
+  function styleCtx(){
     const ctx=canvas.getContext('2d');
-    ctx.scale(dpr,dpr);
-    ctx.strokeStyle='#534AB7';ctx.lineWidth=2;ctx.lineCap='round';ctx.lineJoin='round';
-    // Restore previous drawing
-    if(initialized) ctx.drawImage(tempCanvas,0,0,tempCanvas.width,tempCanvas.height,0,0,rect.width,rect.height);
-    initialized=true;
+    ctx.strokeStyle='#534AB7';
+    ctx.lineWidth=2.5;
+    ctx.lineCap='round';
+    ctx.lineJoin='round';
   }
 
-  function ensureReady(){
-    if(!initialized) resizeCanvas();
+  function getTouchPos(e){
+    // Get position relative to canvas top-left using offsetLeft/offsetTop
+    // walking up the DOM — works correctly inside iframes
+    let x=0,y=0;
+    let node=canvas;
+    while(node&&node!==document.body){x+=node.offsetLeft;y+=node.offsetTop;node=node.offsetParent;}
+    const touch=e.touches[0];
+    return{x:touch.pageX-x, y:touch.pageY-y};
   }
 
-  function pos(e){
-    ensureReady();
-    const r=canvas.getBoundingClientRect();
-    const s=e.touches?e.touches[0]:e;
-    return{x:s.clientX-r.left,y:s.clientY-r.top};
-  }
-  function start(e){
-    ensureReady();
-    e.preventDefault();drawing=true;hint.style.display='none';
+  canvas.addEventListener('mousedown',function(e){
+    e.preventDefault();
+    drawing=true;
+    lastX=e.offsetX;lastY=e.offsetY;
+    hint.style.display='none';
+    styleCtx();
     const ctx=canvas.getContext('2d');
-    ctx.strokeStyle='#534AB7';ctx.lineWidth=2;ctx.lineCap='round';ctx.lineJoin='round';
-    const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);
-  }
-  function move(e){
-    if(!drawing)return;e.preventDefault();
-    const ctx=canvas.getContext('2d');
-    ctx.strokeStyle='#534AB7';ctx.lineWidth=2;ctx.lineCap='round';ctx.lineJoin='round';
-    const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();sigStates[cid]=true;
-  }
-  function stop(){drawing=false;}
+    ctx.beginPath();ctx.moveTo(lastX,lastY);
+  });
 
-  canvas.addEventListener('mousedown',start);
-  canvas.addEventListener('mousemove',move);
-  canvas.addEventListener('mouseup',stop);
-  canvas.addEventListener('mouseleave',stop);
-  canvas.addEventListener('touchstart',start,{passive:false});
-  canvas.addEventListener('touchmove',move,{passive:false});
-  canvas.addEventListener('touchend',stop);
-  // Also try to init now in case canvas is already visible
-  setTimeout(resizeCanvas, 50);
-  // Expose resizeCanvas so goTo can trigger it
-  canvas._resizeCanvas = resizeCanvas;
+  canvas.addEventListener('mousemove',function(e){
+    if(!drawing)return;
+    e.preventDefault();
+    const ctx=canvas.getContext('2d');
+    styleCtx();
+    ctx.beginPath();
+    ctx.moveTo(lastX,lastY);
+    ctx.lineTo(e.offsetX,e.offsetY);
+    ctx.stroke();
+    lastX=e.offsetX;lastY=e.offsetY;
+    sigStates[cid]=true;
+  });
+
+  canvas.addEventListener('mouseup',function(){drawing=false;});
+  canvas.addEventListener('mouseleave',function(){drawing=false;});
+
+  canvas.addEventListener('touchstart',function(e){
+    e.preventDefault();
+    drawing=true;
+    hint.style.display='none';
+    styleCtx();
+    const p=getTouchPos(e);
+    lastX=p.x;lastY=p.y;
+    const ctx=canvas.getContext('2d');
+    ctx.beginPath();ctx.moveTo(lastX,lastY);
+  },{passive:false});
+
+  canvas.addEventListener('touchmove',function(e){
+    if(!drawing)return;
+    e.preventDefault();
+    const p=getTouchPos(e);
+    const ctx=canvas.getContext('2d');
+    styleCtx();
+    ctx.beginPath();
+    ctx.moveTo(lastX,lastY);
+    ctx.lineTo(p.x,p.y);
+    ctx.stroke();
+    lastX=p.x;lastY=p.y;
+    sigStates[cid]=true;
+  },{passive:false});
+
+  canvas.addEventListener('touchend',function(){drawing=false;});
+
+  // Expose for goTo to call when page becomes visible
+  canvas._resizeCanvas=setupCanvas;
+
+  // Set up immediately if visible, otherwise wait
+  if(canvas.offsetWidth>0){
+    setupCanvas();
+  } else {
+    setTimeout(setupCanvas,100);
+  }
 }
 ['sig_privacy','sig_disclose','sig_cancel'].forEach(id=>initSig(id,'hint_'+id.replace('sig_','')));
 
