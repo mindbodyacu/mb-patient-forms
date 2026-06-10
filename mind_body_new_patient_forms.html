@@ -1518,5 +1518,17 @@ function copySummary(){
 const today=new Date().toISOString().split('T')[0];
 ['today_date','privacy_date','cancel_date'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=today;});
 </script>
+
+<script>
+/* ── Auto-resize for Wix iframe ── */
+function sendHeight(){
+  const h = document.body.scrollHeight;
+  window.parent.postMessage({type:'setHeight', height: h + 40}, '*');
+}
+/* Send on load and whenever content changes */
+window.addEventListener('load', sendHeight);
+new MutationObserver(sendHeight).observe(document.body, {childList:true, subtree:true, attributes:true});
+window.addEventListener('resize', sendHeight);
+</script>
 </body>
 </html>
