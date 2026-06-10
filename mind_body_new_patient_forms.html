@@ -1536,13 +1536,19 @@ const today=new Date().toISOString().split('T')[0];
 </script>
 
 <script>
-/* ── Auto-resize for Wix iframe ── */
+/* ── Auto-resize + scroll fix for Wix iframe ── */
 function sendHeight(){
   const h = document.body.scrollHeight;
   window.parent.postMessage({type:'setHeight', height: h + 40}, '*');
 }
-/* Send on load and whenever content changes */
-window.addEventListener('load', sendHeight);
+function sendScrollTop(){
+  window.parent.postMessage({type:'scrollTop'}, '*');
+}
+window.addEventListener('load', function(){
+  sendHeight();
+  document.body.setAttribute('tabindex', '-1');
+  document.body.blur();
+});
 new MutationObserver(sendHeight).observe(document.body, {childList:true, subtree:true, attributes:true});
 window.addEventListener('resize', sendHeight);
 </script>
