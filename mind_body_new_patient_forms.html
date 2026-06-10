@@ -269,35 +269,6 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
 }
 .page-error-banner.visible { display: flex; }
 
-/* Square card block */
-.card-block {
-  border: 1px solid var(--purple-border); border-radius: var(--radius);
-  padding: 18px 20px; margin: 16px 0; background: var(--purple-light);
-}
-.card-block-title { font-size: 14px; font-weight: 600; color: var(--purple-dark); margin-bottom: 6px; }
-.card-block-desc { font-size: 13px; color: var(--gray-text); margin-bottom: 14px; line-height: 1.6; }
-.card-options { display: flex; flex-direction: column; gap: 10px; }
-.card-option {
-  display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px;
-  border: 1px solid var(--purple-border); border-radius: var(--radius-sm);
-  background: var(--white); cursor: pointer; transition: all 0.15s;
-}
-.card-option:hover { border-color: var(--purple); }
-.card-option.selected { border-color: var(--purple); background: #F5F4FF; }
-.card-option input[type=radio] { margin-top: 2px; flex-shrink: 0; }
-.card-option-label { font-size: 13px; font-weight: 500; color: var(--text); }
-.card-option-desc { font-size: 12px; color: var(--gray-text); margin-top: 2px; }
-.btn-square {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 10px 20px; font-size: 14px; font-weight: 600;
-  background: #006AFF; color: white; border: none;
-  border-radius: var(--radius-sm); cursor: pointer; font-family: inherit;
-  text-decoration: none; margin-top: 10px; transition: background 0.15s;
-}
-.btn-square:hover { background: #0052CC; }
-.card-confirmed { display: none; align-items: center; gap: 8px; padding: 10px 14px; background: #EAF6EF; border: 1px solid #5DCAA5; border-radius: var(--radius-sm); font-size: 13px; color: #0F6E56; font-weight: 500; margin-top: 10px; }
-.card-confirmed.visible { display: flex; }
-
 /* Responsive */
 @media (max-width: 600px) {
   .field-row.cols-2, .field-row.cols-3, .field-row.cols-4 { grid-template-columns: 1fr; }
@@ -1023,17 +994,6 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
         <button class="sig-clear" onclick="clearSig('sig_cancel','hint_cancel')">Clear signature</button>
         <span class="error-msg" id="sig_cancel_error">Signature required</span>
       </div>
-
-      <!-- Square card on file -->
-      <div class="card-block" id="card-block">
-        <div class="card-block-title">&#128179;&nbsp; Place a card on file</div>
-        <div class="card-block-desc">Per the policy above, a valid credit or debit card is required on file. Please click the button below to securely add your card via Square. Your information is encrypted and stored by Square — we never see your full card number.</div>
-        <a class="btn-square" href="https://square.link/u/qd9jtf3P" target="_blank" onclick="markCardDone()">
-          &#128274;&nbsp; Add card via Square
-        </a>
-        <div class="card-confirmed" id="card-confirmed">&#10003;&nbsp; Card added — thank you!</div>
-        <span class="error-msg" id="card_option_error">Please add a card on file before submitting</span>
-      </div>
     </div>
 
     <div id="error-banner-3" class="page-error-banner">&#9888;&nbsp; Please complete all required fields highlighted above before submitting.</div>
@@ -1223,19 +1183,7 @@ function validatePage(n){
       const errEl=document.getElementById('sig_cancel_error');
       if(errEl) errEl.style.display='none';
     }
-    // Card on file — must have clicked the Square button
-    if(!cardDone){
-      const cardBlock=document.getElementById('card-block');
-      if(cardBlock) cardBlock.style.borderColor='var(--red)';
-      const cardErr=document.getElementById('card_option_error');
-      if(cardErr) cardErr.style.display='block';
-      errors.push('Card on file (please click Add card via Square)');
-    } else {
-      const cardBlock=document.getElementById('card-block');
-      if(cardBlock) cardBlock.style.borderColor='var(--purple-border)';
-      const cardErr=document.getElementById('card_option_error');
-      if(cardErr) cardErr.style.display='none';
-    }
+    // Card on file handled by Wix Bookings at time of appointment booking
   }
 
   if(errors.length>0){
@@ -1273,18 +1221,7 @@ function goTo(n){
   window.scrollTo(0,0);
 }
 
-/* ========== SQUARE CARD HELPERS ========== */
-let cardDone = false;
-function markCardDone(){
-  setTimeout(()=>{
-    cardDone = true;
-    document.getElementById('card-confirmed').classList.add('visible');
-    const cardBlock=document.getElementById('card-block');
-    if(cardBlock) cardBlock.style.borderColor='var(--purple-border)';
-    const cardErr=document.getElementById('card_option_error');
-    if(cardErr) cardErr.style.display='none';
-  }, 1500);
-}
+
 
 /* ========== BODY MAP ========== */
 const selected=new Map();
@@ -1522,7 +1459,6 @@ function buildSummary(){
     '─── CANCELLATION POLICY ───',
     'Initial 1 (card on file): '+val('initial_1'),
     'Initial 2 (48hr policy): '+val('initial_2'),
-    'Card on file: Added via Square',
     'Cancellation policy signed: YES',
     '',
     '═══════════════════════════════════════════',
