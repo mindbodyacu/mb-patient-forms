@@ -243,6 +243,55 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
   display: inline-block;
 }
 
+/* Validation */
+.field-error input, .field-error select, .field-error textarea {
+  border-color: var(--red) !important;
+  box-shadow: 0 0 0 3px rgba(192,57,43,0.1) !important;
+}
+.field-error .phone-row input, .field-error .phone-row select {
+  border-color: var(--red) !important;
+}
+.error-msg {
+  font-size: 11px; color: var(--red); margin-top: 3px; display: none;
+}
+.field-error .error-msg { display: block; }
+.field-error .sig-wrap { border-color: var(--red) !important; box-shadow: 0 0 0 3px rgba(192,57,43,0.1); }
+.page-error-banner {
+  background: #FDF0EE; border: 1px solid #E8B4AD; border-radius: var(--radius-sm);
+  padding: 12px 16px; font-size: 13px; color: var(--red); margin-bottom: 16px;
+  display: none; align-items: center; gap: 10px;
+}
+.page-error-banner.visible { display: flex; }
+
+/* Square card block */
+.card-block {
+  border: 1px solid var(--purple-border); border-radius: var(--radius);
+  padding: 18px 20px; margin: 16px 0; background: var(--purple-light);
+}
+.card-block-title { font-size: 14px; font-weight: 600; color: var(--purple-dark); margin-bottom: 6px; }
+.card-block-desc { font-size: 13px; color: var(--gray-text); margin-bottom: 14px; line-height: 1.6; }
+.card-options { display: flex; flex-direction: column; gap: 10px; }
+.card-option {
+  display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px;
+  border: 1px solid var(--purple-border); border-radius: var(--radius-sm);
+  background: var(--white); cursor: pointer; transition: all 0.15s;
+}
+.card-option:hover { border-color: var(--purple); }
+.card-option.selected { border-color: var(--purple); background: #F5F4FF; }
+.card-option input[type=radio] { margin-top: 2px; flex-shrink: 0; }
+.card-option-label { font-size: 13px; font-weight: 500; color: var(--text); }
+.card-option-desc { font-size: 12px; color: var(--gray-text); margin-top: 2px; }
+.btn-square {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 20px; font-size: 14px; font-weight: 600;
+  background: #006AFF; color: white; border: none;
+  border-radius: var(--radius-sm); cursor: pointer; font-family: inherit;
+  text-decoration: none; margin-top: 10px; transition: background 0.15s;
+}
+.btn-square:hover { background: #0052CC; }
+.card-confirmed { display: none; align-items: center; gap: 8px; padding: 10px 14px; background: #EAF6EF; border: 1px solid #5DCAA5; border-radius: var(--radius-sm); font-size: 13px; color: #0F6E56; font-weight: 500; margin-top: 10px; }
+.card-confirmed.visible { display: flex; }
+
 /* Responsive */
 @media (max-width: 600px) {
   .field-row.cols-2, .field-row.cols-3, .field-row.cols-4 { grid-template-columns: 1fr; }
@@ -425,9 +474,10 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
       </div>
     </div>
 
+    <div id="error-banner-0" class="page-error-banner">&#9888;&nbsp; Please fill in all required fields highlighted above before continuing.</div>
     <div class="nav-btns">
       <div></div>
-      <button class="btn-next" onclick="goTo(1)">Next: Symptoms &#8594;</button>
+      <button class="btn-next" onclick="validateAndGoTo(1)">Next: Symptoms &#8594;</button>
     </div>
   </div>
 
@@ -867,9 +917,10 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
       </div>
     </div>
 
+    <div id="error-banner-1" class="page-error-banner">&#9888;&nbsp; Please fill in all required fields highlighted above before continuing.</div>
     <div class="nav-btns">
       <button class="btn-back" onclick="goTo(0)">&#8592; Back</button>
-      <button class="btn-next" onclick="goTo(2)">Next: Legal &amp; privacy &#8594;</button>
+      <button class="btn-next" onclick="validateAndGoTo(2)">Next: Legal &amp; privacy &#8594;</button>
     </div>
   </div>
 
@@ -926,9 +977,10 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
       </div>
     </div>
 
+    <div id="error-banner-2" class="page-error-banner">&#9888;&nbsp; Please fill in all required fields highlighted above before continuing.</div>
     <div class="nav-btns">
       <button class="btn-back" onclick="goTo(1)">&#8592; Back</button>
-      <button class="btn-next" onclick="goTo(3)">Next: Cancellation policy &#8594;</button>
+      <button class="btn-next" onclick="validateAndGoTo(3)">Next: Cancellation policy &#8594;</button>
     </div>
   </div>
 
@@ -954,15 +1006,49 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
       </div>
 
       <div class="field-row cols-2" style="margin-top:16px">
-        <div class="field"><label>Patient name (print)</label><input type="text" id="cancel_name"></div>
-        <div class="field"><label>Today's date</label><input type="date" id="cancel_date"></div>
+        <div class="field"><label>Patient name (print)</label><input type="text" id="cancel_name"><span class="error-msg">Required</span></div>
+        <div class="field"><label>Today's date</label><input type="date" id="cancel_date"><span class="error-msg">Required</span></div>
       </div>
       <div class="field" style="margin-top:12px"><label>Patient signature</label>
         <div class="sig-wrap"><canvas class="sig-pad" id="sig_cancel"></canvas><div class="sig-hint" id="hint_cancel">Sign here with your mouse or finger</div></div>
         <button class="sig-clear" onclick="clearSig('sig_cancel','hint_cancel')">Clear signature</button>
+        <span class="error-msg" id="sig_cancel_error">Signature required</span>
+      </div>
+
+      <!-- Square card on file -->
+      <div class="card-block" id="card-block">
+        <div class="card-block-title">&#128179;&nbsp; Place a card on file</div>
+        <div class="card-block-desc">Per the policy above, a valid credit or debit card is required on file. Please choose one of the options below.</div>
+        <div class="card-options">
+          <label class="card-option" id="card-opt-new" onclick="selectCardOption('new')">
+            <input type="radio" name="card_option" value="new" id="card_radio_new">
+            <div>
+              <div class="card-option-label">Add a new card securely via Square</div>
+              <div class="card-option-desc">You'll be taken to our secure Square payment page to enter your card. Your information is encrypted and stored by Square — we never see your full card number.</div>
+            </div>
+          </label>
+          <label class="card-option" id="card-opt-existing" onclick="selectCardOption('existing')">
+            <input type="radio" name="card_option" value="existing" id="card_radio_existing">
+            <div>
+              <div class="card-option-label">Use the same card I entered for my deposit</div>
+              <div class="card-option-desc">The card you used when booking will be kept on file.</div>
+            </div>
+          </label>
+        </div>
+        <div id="card-action-new" style="display:none">
+          <a class="btn-square" href="https://square.link/u/qd9jtf3P" target="_blank" onclick="markCardDone()">
+            &#128274;&nbsp; Add card via Square
+          </a>
+          <div class="card-confirmed" id="card-confirmed">&#10003;&nbsp; Card added — thank you!</div>
+        </div>
+        <div id="card-action-existing" style="display:none">
+          <div class="card-confirmed visible">&#10003;&nbsp; Got it — your deposit card will be kept on file.</div>
+        </div>
+        <span class="error-msg" id="card_option_error">Please select a card option above</span>
       </div>
     </div>
 
+    <div id="error-banner-3" class="page-error-banner">&#9888;&nbsp; Please complete all required fields highlighted above before submitting.</div>
     <div class="nav-btns">
       <button class="btn-back" onclick="goTo(2)">&#8592; Back</button>
       <button class="btn-submit" onclick="submitForms()">Submit all forms &#10003;</button>
@@ -1036,6 +1122,141 @@ document.getElementById('country_select').addEventListener('change',function(){
 
 /* ========== PAGE NAV ========== */
 let currentPage=0;
+/* ========== VALIDATION ========== */
+function clearErrors(pageNum){
+  document.querySelectorAll('#page'+pageNum+' .field-error').forEach(el=>el.classList.remove('field-error'));
+  const banner=document.getElementById('error-banner-'+pageNum);
+  if(banner) banner.classList.remove('visible');
+}
+
+function markError(el){
+  // Walk up to find the .field wrapper
+  let node=el;
+  for(let i=0;i<4;i++){if(node&&node.classList&&node.classList.contains('field')){node.classList.add('field-error');return;}node=node.parentElement;}
+}
+
+function validatePage(n){
+  clearErrors(n);
+  let errors=[];
+
+  if(n===0){
+    const req=[
+      {id:'first_name',label:'First name'},
+      {id:'last_name',label:'Last name'},
+      {id:'primary_phone',label:'Primary phone'},
+      {id:'email',label:'Email address'},
+      {id:'address',label:'Street address'},
+      {id:'city',label:'City'},
+      {id:'zip',label:'Zip / postal code'},
+      {id:'emergency_contact',label:'Emergency contact'},
+      {id:'main_complaint',label:'Main complaint'},
+      {id:'onset',label:'How long ago this began'},
+    ];
+    req.forEach(({id,label})=>{
+      const el=document.getElementById(id);
+      if(el&&!el.value.trim()){markError(el);errors.push(label);}
+    });
+    // country
+    const country=document.getElementById('country_select');
+    if(country&&!country.value){markError(country);errors.push('Country');}
+    // acu_before radio
+    const acuChecked=document.querySelector('input[name="acu_before"]:checked');
+    if(!acuChecked){
+      const radios=document.querySelectorAll('input[name="acu_before"]');
+      if(radios.length) markError(radios[0]);
+      errors.push('Acupuncture before (yes/no)');
+    }
+  }
+
+  if(n===1){
+    // Main symptom page — only required field is suicide_hx radio (clinical requirement)
+    const suicideChecked=document.querySelector('input[name="suicide_hx"]:checked');
+    if(!suicideChecked){
+      const radios=document.querySelectorAll('input[name="suicide_hx"]');
+      if(radios.length) markError(radios[0]);
+      errors.push('Suicide attempt history (yes/no)');
+    }
+  }
+
+  if(n===2){
+    // Must pick at least one of physician eval OR chiro referral
+    const physicianChecked=document.querySelector('input[name="physician_eval"]:checked');
+    const chiroChecked=document.querySelector('input[name="chiro_referral"]:checked');
+    if(!physicianChecked){
+      const radios=document.querySelectorAll('input[name="physician_eval"]');
+      if(radios.length) markError(radios[0]);
+      errors.push('Physician/dentist evaluation (yes/no)');
+    }
+    if(!chiroChecked){
+      const radios=document.querySelectorAll('input[name="chiro_referral"]');
+      if(radios.length) markError(radios[0]);
+      errors.push('Chiropractor referral (yes/no)');
+    }
+    // Privacy name + date + signature
+    const privName=document.getElementById('privacy_name');
+    if(privName&&!privName.value.trim()){markError(privName);errors.push('Patient name (privacy form)');}
+    const privDate=document.getElementById('privacy_date');
+    if(privDate&&!privDate.value){markError(privDate);errors.push('Date (privacy form)');}
+    if(!sigStates['sig_privacy']){
+      const wrap=document.querySelector('#sig_privacy')?.closest('.field');
+      if(wrap) wrap.classList.add('field-error');
+      errors.push('Privacy consent signature');
+    }
+  }
+
+  if(n===3){
+    // Initials
+    const init1=document.getElementById('initial_1');
+    if(init1&&!init1.value.trim()){markError(init1);errors.push('Initials (card on file)');}
+    const init2=document.getElementById('initial_2');
+    if(init2&&!init2.value.trim()){markError(init2);errors.push('Initials (48hr policy)');}
+    // Cancel name + date
+    const cname=document.getElementById('cancel_name');
+    if(cname&&!cname.value.trim()){markError(cname);errors.push('Patient name (cancellation form)');}
+    const cdate=document.getElementById('cancel_date');
+    if(cdate&&!cdate.value){markError(cdate);errors.push('Date (cancellation form)');}
+    // Signature
+    if(!sigStates['sig_cancel']){
+      const wrap=document.querySelector('#sig_cancel')?.closest('.field');
+      if(wrap) wrap.classList.add('field-error');
+      const errEl=document.getElementById('sig_cancel_error');
+      if(errEl) errEl.style.display='block';
+      errors.push('Cancellation policy signature');
+    } else {
+      const errEl=document.getElementById('sig_cancel_error');
+      if(errEl) errEl.style.display='none';
+    }
+    // Card option
+    const cardChosen=document.querySelector('input[name="card_option"]:checked');
+    if(!cardChosen){
+      const cardBlock=document.getElementById('card-block');
+      if(cardBlock) cardBlock.style.borderColor='var(--red)';
+      const cardErr=document.getElementById('card_option_error');
+      if(cardErr) cardErr.style.display='block';
+      errors.push('Card on file option');
+    } else {
+      const cardBlock=document.getElementById('card-block');
+      if(cardBlock) cardBlock.style.borderColor='var(--purple-border)';
+      const cardErr=document.getElementById('card_option_error');
+      if(cardErr) cardErr.style.display='none';
+    }
+  }
+
+  if(errors.length>0){
+    const banner=document.getElementById('error-banner-'+n);
+    if(banner) banner.classList.add('visible');
+    // Scroll to first error
+    const firstErr=document.querySelector('#page'+n+' .field-error, #page'+n+' .page-error-banner.visible');
+    if(firstErr) firstErr.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  return errors.length===0;
+}
+
+function validateAndGoTo(n){
+  if(!validatePage(currentPage)) return;
+  goTo(n);
+}
+
 function goTo(n){
   document.getElementById('page'+currentPage).classList.remove('active');
   const oldTab=document.getElementById('tab'+currentPage);
@@ -1048,6 +1269,26 @@ function goTo(n){
   const labels=['Step 1 of 4: Health history','Step 2 of 4: Symptoms','Step 3 of 4: Legal & privacy','Step 4 of 4: Cancellation policy','Complete'];
   document.getElementById('prog-label').textContent=labels[currentPage]||'';
   window.scrollTo(0,0);
+}
+
+/* ========== SQUARE CARD HELPERS ========== */
+function selectCardOption(type){
+  document.getElementById('card-opt-new').classList.toggle('selected', type==='new');
+  document.getElementById('card-opt-existing').classList.toggle('selected', type==='existing');
+  document.getElementById('card-radio-new') && (document.getElementById('card_radio_new').checked = type==='new');
+  document.getElementById('card-radio-existing') && (document.getElementById('card_radio_existing').checked = type==='existing');
+  document.getElementById('card-action-new').style.display = type==='new' ? 'block' : 'none';
+  document.getElementById('card-action-existing').style.display = type==='existing' ? 'block' : 'none';
+  const cardErr=document.getElementById('card_option_error');
+  if(cardErr) cardErr.style.display='none';
+  const cardBlock=document.getElementById('card-block');
+  if(cardBlock) cardBlock.style.borderColor='var(--purple-border)';
+}
+
+function markCardDone(){
+  setTimeout(()=>{
+    document.getElementById('card-confirmed').classList.add('visible');
+  }, 1500);
 }
 
 /* ========== BODY MAP ========== */
@@ -1201,6 +1442,7 @@ function buildSummary(){
     '─── CANCELLATION POLICY ───',
     'Initial 1 (card on file): '+val('initial_1'),
     'Initial 2 (48hr policy): '+val('initial_2'),
+    'Card on file: '+(radio('card_option')==='existing'?'Using deposit card':'New card added via Square'),
     'Cancellation policy signed: YES',
     '',
     '═══════════════════════════════════════════',
@@ -1211,9 +1453,7 @@ function buildSummary(){
 }
 
 async function submitForms(){
-  const firstName=val('first_name');const lastName=val('last_name');
-  if(!firstName||!lastName){alert('Please enter your first and last name in the Health History section.');goTo(0);return;}
-  if(!sigStates['sig_privacy']||!sigStates['sig_cancel']){alert('Please sign both the privacy consent and the cancellation policy before submitting.');return;}
+  if(!validatePage(3)) return;
 
   /* Show page 4 in loading state */
   ['tab0','tab1','tab2','tab3'].forEach(id=>{const t=document.getElementById(id);if(t){t.classList.remove('active');t.classList.add('done');}});
