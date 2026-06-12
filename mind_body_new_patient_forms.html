@@ -318,7 +318,7 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
       <div class="field-row cols-3">
         <div class="field"><label>Date of birth</label><input type="date" id="dob"><span class="error-msg">Required</span></div>
         <div class="field"><label>Today's date</label><input type="date" id="today_date"></div>
-        <div class="field"><label>Preferred pronouns</label><input type="text" id="pronouns" placeholder="e.g. she/her, they/them"><span class="error-msg">Required</span></div>
+        <div class="field"><label>Preferred pronouns</label><input type="text" id="pronouns" placeholder="e.g. she/her, they/them"></div>
       </div>
 
       <div class="field-row cols-2">
@@ -352,7 +352,7 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
       </div>
 
       <div class="field-row cols-2">
-        <div class="field"><label>Place of birth</label><input type="text" id="pob"><span class="error-msg">Required</span></div>
+        <div class="field"><label>Place of birth</label><input type="text" id="pob"></div>
         <div class="field"><label>Marital status</label>
           <select id="marital"><option value="">Select…</option><option>Single</option><option>Married</option><option>Partnered</option><option>Divorced</option><option>Widowed</option></select>
           <span class="error-msg">Required</span>
@@ -363,7 +363,7 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
         <div class="field"><label>Height</label><input type="text" id="height" placeholder="5'6&quot;"><span class="error-msg">Required</span></div>
         <div class="field"><label>Weight</label><input type="text" id="weight" placeholder="140 lbs"><span class="error-msg">Required</span></div>
         <div class="field"><label>Age</label><input type="text" id="age"><span class="error-msg">Required</span></div>
-        <div class="field"><label>Occupation</label><input type="text" id="occupation"><span class="error-msg">Required</span></div>
+        <div class="field"><label>Occupation</label><input type="text" id="occupation"></div>
       </div>
 
       <div class="field-row cols-2">
@@ -1018,7 +1018,7 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
           <p style="margin-top:10px;font-size:13px;color:#AAA">Questions? Call us at (512) 541-9673</p>
         </div>
         <div id="success-error" style="display:none;margin-top:12px">
-          <p style="color:#C0392B;font-size:13px;margin-bottom:12px">Something went wrong sending your form. Please copy your answers below and email them to <strong>info@mindplusbodyacu.com</strong>.</p>
+          <p style="color:#C0392B;font-size:13px;margin-bottom:12px">Something went wrong sending your form. Please copy your answers below and email them to <strong>hello@mindplusbodyacu.com</strong>.</p>
           <div class="summary-box" id="summary-box"></div>
           <button class="btn-copy" onclick="copySummary()">&#128203; Copy to clipboard</button>
           <a class="btn-email" id="mailto-link" href="#">&#9993; Open in email</a>
@@ -1096,17 +1096,14 @@ function validatePage(n){
       {id:'first_name',label:'First name'},
       {id:'last_name',label:'Last name'},
       {id:'dob',label:'Date of birth'},
-      {id:'pronouns',label:'Preferred pronouns'},
       {id:'primary_phone',label:'Primary phone'},
       {id:'email',label:'Email address'},
       {id:'address',label:'Street address'},
       {id:'city',label:'City'},
       {id:'zip',label:'Zip / postal code'},
-      {id:'pob',label:'Place of birth'},
       {id:'age',label:'Age'},
       {id:'height',label:'Height'},
       {id:'weight',label:'Weight'},
-      {id:'occupation',label:'Occupation'},
       {id:'emergency_contact',label:'Emergency contact'},
       {id:'main_complaint',label:'Main complaint'},
       {id:'onset',label:'How long ago this began'},
@@ -1516,14 +1513,14 @@ async function submitForms(){
         access_key: WEB3FORMS_KEY,
         subject: subject,
         from_name: firstName+' '+lastName,
-        email: val('email')||'noreply@mindplusbodyacu.com',
+        email: val('email')||'hello@mindplusbodyacu.com',
         message: summary,
         botcheck: ''
       })
     });
 
     let data;
-    try { data = await res.json(); } catch(e){ throw new Error('Could not parse response'); }
+    try { data = await res.json(); } catch(e){ throw new Error('Server response was not JSON — status: '+res.status); }
 
     if(res.ok && data.success){
       document.getElementById('success-heading').textContent='Forms received!';
@@ -1531,18 +1528,14 @@ async function submitForms(){
       document.getElementById('success-detail').style.display='block';
       document.getElementById('prog-label').textContent='Complete!';
     } else {
-      throw new Error(data.message||'Submission failed with status '+res.status);
+      throw new Error('Web3Forms error: '+(data.message||JSON.stringify(data))+' — HTTP '+res.status);
     }
   } catch(err) {
     console.error('Submission error:', err);
-    document.getElementById('success-heading').textContent='Almost there!';
-    document.getElementById('success-msg').textContent='';
-    document.getElementById('success-error').style.display='block';
-    const summaryBox=document.getElementById('summary-box');
-    if(summaryBox) summaryBox.textContent=summary;
-    const mailtoLink=document.getElementById('mailto-link');
-    if(mailtoLink) mailtoLink.href='mailto:info@mindplusbodyacu.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(summary);
-    document.getElementById('prog-label').textContent='Action needed';
+    const errMsg = err && err.message ? err.message : 'Unknown error';
+    document.getElementById('success-heading').textContent='Submission error';
+    document.getElementById('success-msg').textContent='Error details: ' + errMsg + ' — please screenshot this and send to your web developer.';
+    document.getElementById('prog-label').textContent='Error';
   }
 }
 
