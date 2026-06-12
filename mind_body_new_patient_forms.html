@@ -316,9 +316,9 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
       </div>
 
       <div class="field-row cols-3">
-        <div class="field"><label>Date of birth</label><input type="date" id="dob"></div>
+        <div class="field"><label>Date of birth</label><input type="date" id="dob"><span class="error-msg">Required</span></div>
         <div class="field"><label>Today's date</label><input type="date" id="today_date"></div>
-        <div class="field"><label>Preferred pronouns</label><input type="text" id="pronouns" placeholder="e.g. she/her, they/them"></div>
+        <div class="field"><label>Preferred pronouns</label><input type="text" id="pronouns" placeholder="e.g. she/her, they/them"><span class="error-msg">Required</span></div>
       </div>
 
       <div class="field-row cols-2">
@@ -352,17 +352,18 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
       </div>
 
       <div class="field-row cols-2">
-        <div class="field"><label>Place of birth</label><input type="text" id="pob"></div>
+        <div class="field"><label>Place of birth</label><input type="text" id="pob"><span class="error-msg">Required</span></div>
         <div class="field"><label>Marital status</label>
           <select id="marital"><option value="">Select…</option><option>Single</option><option>Married</option><option>Partnered</option><option>Divorced</option><option>Widowed</option></select>
+          <span class="error-msg">Required</span>
         </div>
       </div>
 
       <div class="field-row cols-4">
-        <div class="field"><label>Height</label><input type="text" id="height" placeholder="5'6&quot;"></div>
-        <div class="field"><label>Weight</label><input type="text" id="weight" placeholder="140 lbs"></div>
-        <div class="field"><label>Age</label><input type="text" id="age"></div>
-        <div class="field"><label>Occupation</label><input type="text" id="occupation"></div>
+        <div class="field"><label>Height</label><input type="text" id="height" placeholder="5'6&quot;"><span class="error-msg">Required</span></div>
+        <div class="field"><label>Weight</label><input type="text" id="weight" placeholder="140 lbs"><span class="error-msg">Required</span></div>
+        <div class="field"><label>Age</label><input type="text" id="age"><span class="error-msg">Required</span></div>
+        <div class="field"><label>Occupation</label><input type="text" id="occupation"><span class="error-msg">Required</span></div>
       </div>
 
       <div class="field-row cols-2">
@@ -387,7 +388,7 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
         <div class="field"><label>How long ago did this begin?</label><input type="text" id="onset" placeholder="e.g. 3 months ago, 2 years"></div>
         <div class="field"><label>Known cause?</label><input type="text" id="known_cause"></div>
       </div>
-      <div class="field-row"><div class="field"><label>To what extent does this interfere with daily activities?</label><textarea id="interference" placeholder="Impact on work, sleep, activity…" style="min-height:52px"></textarea></div></div>
+      <div class="field-row"><div class="field"><label>To what extent does this interfere with daily activities?</label><textarea id="interference" placeholder="Impact on work, sleep, activity…" style="min-height:52px"></textarea><span class="error-msg">Required</span></div></div>
       <div class="field-row"><div class="field"><label>Have you received a diagnosis? If so, what?</label><input type="text" id="diagnosis"></div></div>
       <div class="field-row"><div class="field"><label>What treatments have you tried?</label><textarea id="treatments_tried" style="min-height:52px" placeholder="Medications, physical therapy, chiropractic, etc."></textarea></div></div>
     </div>
@@ -418,7 +419,7 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
       <div class="section-title">Additional history</div>
       <div class="field-row"><div class="field"><label>Surgeries or hospitalizations</label><textarea id="surgeries" style="min-height:52px" placeholder="Procedure, approximate year…"></textarea></div></div>
       <div class="field-row"><div class="field"><label>Significant trauma</label><input type="text" id="trauma"></div></div>
-      <div class="field-row"><div class="field"><label>Allergies (drugs, chemicals, foods)</label><input type="text" id="allergies" placeholder="e.g. Penicillin, latex, shellfish"></div></div>
+      <div class="field-row"><div class="field"><label>Allergies (drugs, chemicals, foods)</label><input type="text" id="allergies" placeholder="e.g. Penicillin, latex, shellfish, or None"><span class="error-msg">Required — enter "None" if none</span></div></div>
       <div class="field-row"><div class="field"><label>Patient birth history</label><input type="text" id="birth_hx" placeholder="e.g. preterm, prolonged labor, C-section"></div></div>
     </div>
 
@@ -435,7 +436,7 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
 
     <div class="section">
       <div class="section-title">Recent medicines &amp; supplements</div>
-      <div class="field-row"><div class="field"><label>All medications taken in the last 2 months (include vitamins, supplements, herbs)</label><textarea id="medications" style="min-height:80px" placeholder="Name, dose, frequency…"></textarea></div></div>
+      <div class="field-row"><div class="field"><label>All medications taken in the last 2 months (include vitamins, supplements, herbs)</label><textarea id="medications" style="min-height:80px" placeholder="Name, dose, frequency — or enter None"></textarea><span class="error-msg">Required — enter "None" if none</span></div></div>
     </div>
 
     <div class="section">
@@ -712,7 +713,9 @@ canvas.sig-pad { display: block; width: 100%; height: 120px; cursor: crosshair; 
           <g class="region" id="f-r-forearm" onclick="toggle(this,'Right forearm')"><rect x="232" y="238" width="24" height="72" rx="4" class="hl"/><text x="244" y="278" class="lbl">R forearm</text></g>
           <g class="region" id="f-r-wrist" onclick="toggle(this,'Right wrist')"><ellipse cx="244" cy="316" rx="14" ry="8" class="hl"/><text x="263" y="319" class="lbl">R wrist</text></g>
           <g class="region" id="f-r-hand" onclick="toggle(this,'Right hand')"><ellipse cx="244" cy="342" rx="20" ry="16" class="hl"/><text x="244" y="345" class="lbl">R hand</text></g>
-          <g class="region" id="f-groin" onclick="toggle(this,'Groin / hips')"><rect x="110" y="302" width="100" height="46" rx="4" class="hl"/><text x="160" y="330" class="lbl">Groin / hips</text></g>
+          <g class="region" id="f-l-hip" onclick="toggle(this,'Left hip')"><rect x="110" y="302" width="30" height="46" rx="4" class="hl"/><text x="125" y="330" class="lbl">L hip</text></g>
+          <g class="region" id="f-groin" onclick="toggle(this,'Groin')"><rect x="142" y="302" width="36" height="46" rx="4" class="hl"/><text x="160" y="330" class="lbl">Groin</text></g>
+          <g class="region" id="f-r-hip" onclick="toggle(this,'Right hip')"><rect x="180" y="302" width="30" height="46" rx="4" class="hl"/><text x="195" y="330" class="lbl">R hip</text></g>
           <g class="region" id="f-l-thigh" onclick="toggle(this,'Left thigh')"><rect x="104" y="355" width="32" height="90" rx="4" class="hl"/><text x="120" y="403" class="lbl">L thigh</text></g>
           <g class="region" id="f-l-knee" onclick="toggle(this,'Left knee')"><ellipse cx="112" cy="460" rx="14" ry="14" class="hl"/><text x="112" y="463" class="lbl">L knee</text></g>
           <g class="region" id="f-l-shin" onclick="toggle(this,'Left shin')"><rect x="103" y="476" width="18" height="38" rx="4" class="hl"/><text x="89" y="498" class="lbl">L shin</text></g>
@@ -1092,14 +1095,24 @@ function validatePage(n){
     const req=[
       {id:'first_name',label:'First name'},
       {id:'last_name',label:'Last name'},
+      {id:'dob',label:'Date of birth'},
+      {id:'pronouns',label:'Preferred pronouns'},
       {id:'primary_phone',label:'Primary phone'},
       {id:'email',label:'Email address'},
       {id:'address',label:'Street address'},
       {id:'city',label:'City'},
       {id:'zip',label:'Zip / postal code'},
+      {id:'pob',label:'Place of birth'},
+      {id:'age',label:'Age'},
+      {id:'height',label:'Height'},
+      {id:'weight',label:'Weight'},
+      {id:'occupation',label:'Occupation'},
       {id:'emergency_contact',label:'Emergency contact'},
       {id:'main_complaint',label:'Main complaint'},
       {id:'onset',label:'How long ago this began'},
+      {id:'interference',label:'Interference with daily activities'},
+      {id:'allergies',label:'Allergies'},
+      {id:'medications',label:'Medications & supplements (enter "None" if none)'},
     ];
     req.forEach(({id,label})=>{
       const el=document.getElementById(id);
@@ -1108,6 +1121,9 @@ function validatePage(n){
     // country
     const country=document.getElementById('country_select');
     if(country&&!country.value){markError(country);errors.push('Country');}
+    // marital status
+    const marital=document.getElementById('marital');
+    if(marital&&!marital.value){markError(marital);errors.push('Marital status');}
     // acu_before radio
     const acuChecked=document.querySelector('input[name="acu_before"]:checked');
     if(!acuChecked){
@@ -1471,20 +1487,25 @@ function buildSummary(){
 async function submitForms(){
   if(!validatePage(3)) return;
 
-  /* Show page 4 in loading state */
+  const firstName=val('first_name');
+  const lastName=val('last_name');
+  const subject='New Patient Intake — '+firstName+' '+lastName;
+  const summary=buildSummary();
+
+  /* Show loading state */
+  document.getElementById('success-heading').textContent='Sending your forms…';
+  document.getElementById('success-msg').textContent='Please wait while we securely send your information.';
+  document.getElementById('success-detail').style.display='none';
+  document.getElementById('success-error').style.display='none';
+
   ['tab0','tab1','tab2','tab3'].forEach(id=>{const t=document.getElementById(id);if(t){t.classList.remove('active');t.classList.add('done');}});
   document.getElementById('page'+currentPage).classList.remove('active');
-  currentPage=4;document.getElementById('page4').classList.add('active');
+  currentPage=4;
+  document.getElementById('page4').classList.add('active');
   document.getElementById('prog').style.width='100%';
   document.getElementById('prog-label').textContent='Submitting…';
   window.scrollTo(0,0);
 
-  const summary=buildSummary();
-  const subject='New Patient Intake — '+firstName+' '+lastName;
-
-  /* ── Web3Forms submission ── */
-  /* IMPORTANT: Replace YOUR_ACCESS_KEY_HERE with your actual Web3Forms access key */
-  /* Get your free key at: https://web3forms.com — enter info@mindplusbodyacu.com */
   const WEB3FORMS_KEY = '8cae0f54-78d2-4eb9-9612-65e6f7b80ae3';
 
   try {
@@ -1500,17 +1521,20 @@ async function submitForms(){
         botcheck: ''
       })
     });
-    const data = await res.json();
-    if(data.success){
+
+    let data;
+    try { data = await res.json(); } catch(e){ throw new Error('Could not parse response'); }
+
+    if(res.ok && data.success){
       document.getElementById('success-heading').textContent='Forms received!';
       document.getElementById('success-msg').textContent='';
       document.getElementById('success-detail').style.display='block';
       document.getElementById('prog-label').textContent='Complete!';
     } else {
-      throw new Error(data.message||'Submission failed');
+      throw new Error(data.message||'Submission failed with status '+res.status);
     }
   } catch(err) {
-    /* Fallback: show manual copy/email option */
+    console.error('Submission error:', err);
     document.getElementById('success-heading').textContent='Almost there!';
     document.getElementById('success-msg').textContent='';
     document.getElementById('success-error').style.display='block';
